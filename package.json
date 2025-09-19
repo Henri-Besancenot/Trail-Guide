@@ -1,0 +1,29 @@
+{
+  "name": "trail-guide",
+  "version": "1.0.0",
+  "description": "Web application project for CS-E4400 - Design of WWW Services D course",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web",
+    "html",
+    "css",
+    "javascript",
+    "aalto",
+    "cs-e4400"
+  ],
+  "author": "Henri Besancenot",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Henri-Besancenot/Trail-Guide.git"
+  }
+}
