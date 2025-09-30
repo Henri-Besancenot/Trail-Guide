@@ -1,0 +1,31 @@
+/* index.css for shadcn/ui setup */
+@tailwind utilities;
+
+/* Optional: shadcn/ui custom styles */
+:root {
+    --background: 255 255 255;
+    --foreground: 17 17 17;
+    --primary: 59 130 246;
+    --primary-foreground: 255 255 255;
+    --border-radius: 0.5rem;
+}
+
+body {
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+/* Example: Button style override */
+.button {
+    border-radius: var(--border-radius);
+    background-color: rgb(var(--primary));
+    color: rgb(var(--primary-foreground));
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+.button:hover {
+    background-color: rgb(37 99 235);
+}
