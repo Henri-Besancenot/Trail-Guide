@@ -15,8 +15,8 @@ Users can browse and edit trails, filter them by different criteria, and view de
 
 ## Technologies
 
-- **Frontend:** HTML5, CSS, and a modern JavaScript/TypeScript framework (React.js or Vue.js)
-- **Backend:** JavaScript/TypeScript, Nodes.js
+- **Frontend:** React.js with Vite, Tailwind CSS
+- **Backend:** JavaScript/TypeScript, Node.js
 - **Database:** MongoDB
 - **Design & Prototyping:** Figma or Canva
 - **Maps & Visualization:** Google Maps API with GPX track display
@@ -27,10 +27,27 @@ To populate the database, we may extract publicly available trail data, focusing
 
 Our primary focus is on the User Interface (UI). Since clear presentation of maps and trail data is essential, we aim to design a clean, intuitive interface with effective filters and user-friendly map integration. The UI will be evaluated and improved through iterative methods such as Cognitive Walkthroughs and Think-Aloud protocols.
 
+## Development
+
+### Frontend Setup
+This React + Vite template provides a minimal setup to get React working with HMR and ESLint rules.
+
+Currently using:
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) with [Babel](https://babeljs.io/) for Fast Refresh
+- Tailwind CSS for styling
+
+### Running the Application
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
 ## To Do
 
 ### Project Management
-- [ ] Set up project repository and initial file structure
+- [x] Set up project repository and initial file structure
+- [x] Configure React + Vite + Tailwind CSS
 - [ ] Write project documentation and usage instructions
 
 ### UI/UX Design
@@ -39,7 +56,8 @@ Our primary focus is on the User Interface (UI). Since clear presentation of map
 - [ ] Iterate on UI based on feedback
 
 ### Frontend
-- [ ] Choose frontend framework (React.js or Vue.js)
+- [x] Choose frontend framework (React.js with Vite)
+- [x] Set up Tailwind CSS for styling
 - [ ] Implement basic frontend layout and navigation
 - [ ] Integrate Google Maps API and GPX track display
 - [ ] Implement trail browsing and filtering features
