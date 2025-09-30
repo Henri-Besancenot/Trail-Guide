@@ -1,9 +1,4 @@
-/* Supprime tout ce qui ressemble à ça : */
-/*
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-*/
+/* Global styles */
 body {
   margin: 0;
   font-family: sans-serif;
