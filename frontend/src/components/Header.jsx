@@ -13,6 +13,7 @@ function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo/Title */}
           <div className="flex items-center">
+            <img src="/logo.png" alt="Trail Guide Logo" className="h-8 mr-2" /> 
             <h1 className="text-2xl font-bold text-gray-900">Trail Guide</h1>
           </div>
           
@@ -20,14 +21,14 @@ function Header() {
           <Menubar className="border-0 bg-transparent shadow-none">
             <MenubarMenu>
               <MenubarTrigger className="cursor-pointer hover:bg-gray-100 data-[state=open]:bg-gray-100">
-                HomePage
+                Homepage
               </MenubarTrigger>
               <MenubarContent>
                 <MenubarItem onClick={() => console.log('Navigate to Home')}>
-                  Accueil
+                  Home
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Dashboard')}>
-                  Tableau de bord
+                  Dashboard
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
@@ -38,13 +39,13 @@ function Header() {
               </MenubarTrigger>
               <MenubarContent>
                 <MenubarItem onClick={() => console.log('Navigate to All Trails')}>
-                  Tous les sentiers
+                  All Trails
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Popular Trails')}>
-                  Sentiers populaires
+                  Popular Trails
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Nearby Trails')}>
-                  Sentiers à proximité
+                  Nearby Trails
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
@@ -55,13 +56,13 @@ function Header() {
               </MenubarTrigger>
               <MenubarContent>
                 <MenubarItem onClick={() => console.log('Navigate to About')}>
-                  À propos
+                  About
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Contact')}>
                   Contact
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Team')}>
-                  Notre équipe
+                  Our Team
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
