@@ -3,23 +3,19 @@ import background from './assets/mountain-bg.jpg'
 import Footer from './components/Footer'
 import Searchbar from './components/Searchbar'
 import Banner from './components/Banner'
-import './index.css'
+
+import Template from './components/Template'
+
+
 
 function App() {
   return (
-    <div className="min-h-screen w-full flex flex-col ">
-      {/* Header with menubar */}
-      <Header />
-
-      {/* A banner, to comment to have the correct page */}
-      <Banner /> 
-
+    <Template showBanner={false}>
       {/* Main content with background */}
       <div
         className="flex-1"
         style={{
-          // Dark overlay for better text visibility
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${background})`, 
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${background})`,
           backgroundSize: 'cover',
           backgroundPosition: 'top',
           backgroundRepeat: 'no-repeat',
@@ -32,14 +28,13 @@ function App() {
               <h2 className="text-4xl font-bold text-gray-900 mb-4">
                 Welcome to Trail Guide
               </h2>
-              <p className="text-xl  text-white mb-5">
+              <p className="text-xl text-white mb-5">
                 Discover the most beautiful hiking trails near you
               </p>
               <div className="rounded-lg p-8 max-w-2xl mx-auto">
                 <h3 className="text-2xl font-semibold text-gray-800 mb-4">
                   Explore your next adventures
                 </h3>
-                {/* Styled Searchbar */}
                 <div className="flex justify-center items-center" style={{ marginTop: '20px'}}>
                   <Searchbar
                     onSearch={(query) => console.log(query)}
@@ -51,12 +46,7 @@ function App() {
           </div>
         </main>
       </div>
-      
-      {/* This div will be below the background image */}
-      <Footer />   
-      
-
-    </div>  
+    </Template>
   );
 }
 

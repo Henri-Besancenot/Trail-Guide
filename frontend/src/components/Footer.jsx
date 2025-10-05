@@ -1,4 +1,5 @@
 import { FileX } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import React from 'react';
 
 function Footer() {
@@ -22,9 +23,9 @@ function Footer() {
                         <div className="flex flex-col items-start pt-4">
                             <h4 className="font-semibold text-base mb-4">Fast Link</h4>
                             <nav className="flex flex-col space-y-2">
-                                <a href="#" className="text-sm text-black font-normal hover:text-gray-700 transition-colors">HomePage</a>
-                                <a href="#" className="text-sm text-black font-normal hover:text-gray-700 transition-colors">Trails List</a>
-                                <a href="#" className="text-sm text-black font-normal hover:text-gray-700 transition-colors">About Us</a>
+                                <Link to="/" className="text-sm text-black font-normal hover:text-gray-700 transition-colors">HomePage</Link>
+                                <Link to="/trails" className="text-sm text-black font-normal hover:text-gray-700 transition-colors">Trails List</Link>
+                                <Link to="/aboutus" className="text-sm text-black font-normal hover:text-gray-700 transition-colors">About Us</Link>
                             </nav>
                         </div>
 
@@ -38,6 +39,7 @@ function Footer() {
                 </div>
             </div>            
         </footer>
+        
     );
 }
 
