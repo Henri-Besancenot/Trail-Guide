@@ -1,5 +1,6 @@
 /* index.css for shadcn/ui setup */
-@tailwind utilities;
+@import "tailwindcss";
+
 
 
 /* Optional: shadcn/ui custom styles */
@@ -49,13 +50,13 @@ h3 {
     text-align: center;
 }
 
-p {
+.text-test {
     font-size: 1.125rem; /* similar to text-lg */
     color: #f0f0f0; /* light gray for readability */
     line-height: 1.75rem; /* leading-relaxed */
     margin-bottom: 1rem; /* mb-4 */
     text-align: center;
-    max-width: 600px; /* limit width for better readability */
+    /*max-width: 600px;  limit width for better readability */
     margin-left: auto;
     margin-right: auto;
 }

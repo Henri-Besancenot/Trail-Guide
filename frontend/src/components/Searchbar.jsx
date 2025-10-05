@@ -17,45 +17,18 @@ const Searchbar = ({ onSearch }) => {
     return (
         <form
             onSubmit={handleSubmit}
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                width: '33vw',
-                maxWidth: '100%',
-                background: '#fff',
-                borderRadius: '20px',
-                padding: '2px 8px'
-            }}
+            className="flex items-center w-[33vw] max-w-full bg-white rounded-full p-[2px] px-2"
         >
             <input
                 type="text"
                 value={query}
                 onChange={handleInputChange}
                 placeholder="Search..."
-                style={{
-                    flex: 1,
-                    padding: '4px 12px',
-                    fontSize: '14px',
-                    height: '28px',
-                    border: 'none',
-                    outline: 'none',
-                    borderRadius: '20px',
-                    background: 'transparent',
-                }}
+                className="flex-1 px-3 py-1 text-sm h-7 border-none outline-none rounded-full bg-transparent"
             />
             <button
                 type="submit"
-                style={{
-                    height: '28px',
-                    borderRadius: '50%',
-                    border: 'none',
-                    background: '#eee',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    marginLeft: '4px',
-                }}
+                className="h-7 w-7 rounded-full border-none bg-gray-100 flex items-center justify-center cursor-pointer ml-1"
                 aria-label="Search"
             >
                 <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
