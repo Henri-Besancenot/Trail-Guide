@@ -11,6 +11,9 @@ function App() {
       {/* Header with menubar */}
       <Header />
 
+      {/* A banner, to comment to have the correct page */}
+      <Banner /> 
+
       {/* Main content with background */}
       <div
         className="flex-1"
