@@ -11,7 +11,7 @@ const users = {
     const dbo = await database.getDbo();
     return await dbo.collection('users').find().toArray();
   },
-  async search(id) {
+  async getById(id) {
     const dbo = await database.getDbo();
     return await dbo.collection('users').findOne({ _id: toObjectId(id) });
   },
@@ -29,7 +29,6 @@ const users = {
     const result = await dbo.collection('users').insertOne(newUser);
     return await dbo.collection('users').findOne({ _id: result.insertedId });
   },
-
   async update(user) {
     const dbo = await database.getDbo();
     const { _id } = user;
