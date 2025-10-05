@@ -2,6 +2,7 @@ import Header from './components/Header'
 import background from './assets/mountain-bg.jpg'
 import Footer from './components/Footer'
 import Searchbar from './components/Searchbar'
+import Banner from './components/Banner'
 import './index.css'
 
 function App() {
@@ -50,7 +51,8 @@ function App() {
       
       {/* This div will be below the background image */}
       <Footer />   
-         
+      
+
     </div>  
   );
 }
