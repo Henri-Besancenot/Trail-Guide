@@ -1,12 +1,7 @@
 import { FileX } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-
-import AboutUs from '../pages/AboutUs.jsx';
-import TrailsList from '../pages/TrailsList.jsx';
-import App from '../App.jsx';
-
+import logo from "@/assets/logo.png"
 
 function Footer() {
     return (
@@ -16,7 +11,7 @@ function Footer() {
                     {/* Logo and Brand Section */}
                     <div className="flex flex-col items-center pt-4">
                         <img 
-                            src="assets/logo.png"
+                            src={logo}
                             alt="Trail Guide Logo"
                             className="w-12 h-12 mb-2"
                         />
