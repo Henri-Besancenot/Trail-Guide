@@ -1,6 +1,12 @@
 import { FileX } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+import AboutUs from '../pages/AboutUs.jsx';
+import TrailsList from '../pages/TrailsList.jsx';
+import App from '../App.jsx';
+
 
 function Footer() {
     return (
@@ -37,7 +43,8 @@ function Footer() {
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>      
+            
         </footer>
         
     );

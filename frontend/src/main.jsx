@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/trails" element={<TrailsList />} />
+        <Route path="/trails/:category" element={<TrailsList />} />
         <Route path="/aboutus" element={<AboutUs />} />
       </Routes>
     </BrowserRouter>

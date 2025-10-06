@@ -5,6 +5,7 @@ import {
   MenubarContent,
   MenubarItem,
 } from "@/components/ui/menubar"
+import { Link } from "react-router-dom"
 
 function Header() {
   return (
@@ -25,10 +26,10 @@ function Header() {
               </MenubarTrigger>
               <MenubarContent className="bg-white">
                 <MenubarItem onClick={() => console.log('Navigate to Home')}>
-                  Home
+                  <Link to="/">Home</Link>
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Dashboard')}>
-                  Dashboard
+                  <Link to="/dashboard">Dashboard</Link> // Doesn't exist
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
@@ -39,13 +40,13 @@ function Header() {
               </MenubarTrigger>
               <MenubarContent className="bg-white">
                 <MenubarItem onClick={() => console.log('Navigate to All Trails')}>
-                  All Trails
+                  <Link to="/trails/all">All Trails</Link>
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Popular Trails')}>
-                  Popular Trails
+                  <Link to="/trails/popular">Popular Trails</Link>
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Nearby Trails')}>
-                  Nearby Trails
+                  <Link to="/trails/nearby">Nearby Trails</Link>
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>

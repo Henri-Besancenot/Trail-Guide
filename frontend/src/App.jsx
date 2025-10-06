@@ -1,11 +1,6 @@
-import Header from './components/Header'
 import background from './assets/mountain-bg.jpg'
-import Footer from './components/Footer'
 import Searchbar from './components/Searchbar'
-import Banner from './components/Banner'
-
 import Template from './components/Template'
-
 
 
 function App() {
@@ -25,17 +20,17 @@ function App() {
         <main className='h-screen'>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-40">
             <div className="text-center">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-5xl font-bold text-white mb-4 text-shadow-[0_0px_32px_rgb(0,0,0)]">
                 Welcome to Trail Guide
               </h2>
               <p className="text-xl text-white mb-5">
                 Discover the most beautiful hiking trails near you
               </p>
               <div className="rounded-lg p-8 max-w-2xl mx-auto">
-                <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                <h3 className="text-4xl font-semibold text-white mb-4 text-shadow-[0_0px_32px_rgb(0,0,0)]">
                   Explore your next adventures
                 </h3>
-                <div className="flex justify-center items-center" style={{ marginTop: '20px'}}>
+                <div className="flex justify-center items-center mt-5">
                   <Searchbar
                     onSearch={(query) => console.log(query)}
                     className="w-full max-w-md border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow"
