@@ -5,6 +5,7 @@ import {
   MenubarContent,
   MenubarItem,
 } from "@/components/ui/menubar"
+import logo from "@/assets/logo.png"
 
 function Header() {
   return (
@@ -13,7 +14,7 @@ function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo/Title */}
           <div className="flex items-center">
-            <img src="/logo.png" alt="Trail Guide Logo" className="h-8 mr-2" /> 
+            <img src={logo} alt="Trail Guide Logo" className="h-8 mr-2" /> 
             <h1 className="text-2xl font-bold text-gray-900">Trail Guide</h1>
           </div>
           
