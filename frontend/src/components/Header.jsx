@@ -14,11 +14,11 @@ function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo/Title */}
-          <div className="flex items-center">
+          <Link to="/" className="flex items-center">
             <img src={logo} alt="Trail Guide Logo" className="h-8 mr-2" /> 
             <h1 className="text-2xl font-bold text-gray-900">Trail Guide</h1>
-          </div>
-          
+          </Link>
+                
           {/* Navigation Menu */}
           <Menubar className="border-0 bg-[#F3F3EB] shadow-none">
             <MenubarMenu>
@@ -30,7 +30,7 @@ function Header() {
                   <Link to="/">Home</Link>
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Dashboard')}>
-                  <Link to="/dashboard">Dashboard</Link> // Doesn't exist
+                  <Link to="/">Dashboard</Link> // Doesn't exist
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
