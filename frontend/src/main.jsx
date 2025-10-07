@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 
 import TrailsList from './pages/TrailsList.jsx';
+import Trail from './pages/Trail.jsx';
 import AboutUs from './pages/AboutUs.jsx';
 import App from './App.jsx'
 
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/trails/:category" element={<TrailsList />} />
+        <Route path="/trails/all/:id" element={<Trail />} />
         <Route path="/aboutus" element={<AboutUs />} />
       </Routes>
     </BrowserRouter>

@@ -11,7 +11,7 @@ const trails = {
         const dbo = await database.getDbo();
         return await dbo.collection('trails').find().toArray();
     },
-    async search(id) {
+    async getById(id) {
         const dbo = await database.getDbo();
         return await dbo.collection('trails').findOne({ _id: toObjectId(id) });
   },
@@ -25,7 +25,9 @@ const trails = {
             title: trail.title || "Untitled Trail",
             description: trail.description || "",
             distance: trail.distance || 0,
+            elevation_gain:  trail.elevation_gain || 0,
             difficulty: trail.difficulty || "easy",
+            duration: trail.duration || 0,
             images: Array.isArray(trail.images) ? trail.images : [],
             gpx_file: trail.gpx_file || ""
         };
@@ -41,7 +43,7 @@ const trails = {
         delete trail.id;
 
         const result = await dbo.collection('trails').findOneAndUpdate(
-            { _id: toObjectId(id) },
+            { _id: toObjectId(_id) },
             { $set: trail },
             { returnDocument: 'after' }
           );

@@ -1,15 +1,25 @@
 
 import Template from '../components/Template'
 import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 import TrailPreview from '../components/TrailPreview';
 
-const SAMPLE_1 = -1
-const SAMPLE_2 = -2
-const SAMPLE_3 = -3
-
 function TrailsList() {
   const { category } = useParams();
+  const [trails, setTrails] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/trails/all')
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data.status && data.data) {
+          setTrails(data.data);
+        }
+      })
+      .catch(err => console.error('Error fetching trails:', err));
+  }, []);
 
   const getCategoryTitle = (category) => {
     switch (category) {
@@ -37,10 +47,14 @@ function TrailsList() {
         {/* Actual Trail list */}
 
         <div className="mt-8 space-y-8">
-          <TrailPreview id={SAMPLE_1} />
-          <TrailPreview id={SAMPLE_2} />
-          <TrailPreview id={SAMPLE_3} />
-        </div>
+            {trails.length === 0 ? (
+              <p>Loading trails...</p>
+            ) : (
+              trails.map((trail) => (
+                <TrailPreview key={trail._id} trail={trail} />
+              ))
+            )}
+          </div>
 
       </div>
       </div>

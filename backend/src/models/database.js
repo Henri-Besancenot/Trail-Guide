@@ -1,16 +1,18 @@
-
+require('dotenv').config();
 const { DB_URL } = process.env;
+const { MongoClient } = require("mongodb");
 
-const {MongoClient} = require("mongodb");
-let conn = new MongoClient(DB_URL);
+let client;
+let db;
 
 module.exports = {
-    /**
-     * Singleton-like Database Object that connects to the mongodb database
-     */
-    async getDbo(){
-        if(!conn.isConnected())
-            await conn.connect();
-        return conn.db();
+    async getDbo() {
+        if (!db) {
+            client = new MongoClient(DB_URL);
+            await client.connect();
+            db = client.db();
+            console.log("Connected to MongoDB");
+        }
+        return db;
     }
-}
+};
