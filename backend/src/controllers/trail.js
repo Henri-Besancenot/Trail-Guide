@@ -45,5 +45,20 @@ module.exports = {
         const { id } = req.params;
         await trailModel.delete(id);
         res.json({ status: true, message: 'Trail deleted' });
+      },
+
+      async getTrailBySearch(req, res) {
+        const data = "";
+        if (!has(req.params, 'query')) {
+          data = await trailModel.getAll();
+        } else {
+          const { query } = req.params;
+          data = await trailModel.search(query);
+          
+          if (!data)
+            data = await trailModel.getAll();
+        }
+
+        res.json({ status: true, message: 'Returning trails', data });
       }
 };

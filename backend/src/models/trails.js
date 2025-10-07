@@ -52,6 +52,10 @@ const trails = {
     async delete(id) {
         const dbo = await database.getDbo();
         await dbo.collection('trails').deleteOne({ _id: toObjectId(id) });
+    },
+    async search(query) {
+        const dbo = await database.getDbo();
+        return await dbo.collection('trails').find({description: query}).toArray();
     }
 
 }

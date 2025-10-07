@@ -58,7 +58,7 @@ function Header() {
               </MenubarTrigger>
               <MenubarContent className="bg-white">
                 <MenubarItem onClick={() => console.log('Navigate to About')}>
-                  About
+                <Link to="/aboutus">About</Link>
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Contact')}>
                   Contact
