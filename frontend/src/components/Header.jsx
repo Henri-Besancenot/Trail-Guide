@@ -30,7 +30,7 @@ function Header() {
                   <Link to="/">Home</Link>
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Dashboard')}>
-                  <Link to="/">Dashboard</Link> // Doesn't exist
+                  <Link to="/">Dashboard</Link>
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
