@@ -17,8 +17,13 @@ module.exports = {
       },
     
       async getTrails(req, res) {
-        const data = await trailModel.getAll();
-        res.json({ status: true, message: 'Returning trails', data });
+        try {
+          const filters = req.query;
+          const data = await trailModel.search(filters);
+          res.json({ status: true, message: 'Returning filtered trails', data });
+        } catch (err) {
+          res.status(err.code || 500).json({ status: false, message: err.message });
+        }
       },
     
       async createTrail(req, res) {
@@ -45,20 +50,5 @@ module.exports = {
         const { id } = req.params;
         await trailModel.delete(id);
         res.json({ status: true, message: 'Trail deleted' });
-      },
-
-      async getTrailBySearch(req, res) {
-        const data = "";
-        if (!has(req.params, 'query')) {
-          data = await trailModel.getAll();
-        } else {
-          const { query } = req.params;
-          data = await trailModel.search(query);
-          
-          if (!data)
-            data = await trailModel.getAll();
-        }
-
-        res.json({ status: true, message: 'Returning trails', data });
       }
 };

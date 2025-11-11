@@ -53,9 +53,24 @@ const trails = {
         const dbo = await database.getDbo();
         await dbo.collection('trails').deleteOne({ _id: toObjectId(id) });
     },
-    async search(query) {
+    async search(filters) {
         const dbo = await database.getDbo();
-        return await dbo.collection('trails').find({description: query}).toArray();
+        const query = {};
+
+        if (filters.query) {
+            query.$or = [
+              { title: { $regex: filters.query, $options: 'i' } },
+              { description: { $regex: filters.query, $options: 'i' } }
+            ];
+          }
+
+          if (filters.maxDistance) query.distance = { ...query.distance, $lte: Number(filters.maxDistance) };
+          if (filters.minDistance) query.distance = { ...query.distance, $gte: Number(filters.minDistance) };
+          if (filters.elevation_gain) query.elevation_gain = { $lte: Number(filters.elevation_gain) };
+          if (filters.difficulty) query.difficulty = filters.difficulty;
+          if (filters.duration) query.duration = { $lte: Number(filters.duration) };
+
+        return await dbo.collection('trails').find(query).toArray();
     }
 
 }
