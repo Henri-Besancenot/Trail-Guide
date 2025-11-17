@@ -46,19 +46,26 @@ npm run dev
 
 ### The server
 
-It runs on 
+To access the AWS EC2 instance, you need to connect to
+```
+https://670339745902.signin.aws.amazon.com/console
+```
+And login using the username and password that has been given to you.
+You then need to access to the AWS console -> search for EC2 -> Instances -> click on the ID -> Connect -> Connect. You'll then be on the EC2 Instance Connect.
+
+
+Once you're connected, you'll find the server's code on 
 ```
 /var/www/app
   ├─ frontend   # React / Vite / Tailwind
   └─ backend    # Node / Express / MongoDB
 ```
-To access to this write `cd /var/www/app` in the server's terminal
+To access to this directory, run `cd /var/www/app` in the server's terminal
 Once you want to deploy the code in the github repository, you need to run
 ```bash
 cd /var/www/app
 ./deploy.sh
 ```
-
 That basically do those steps:
 - Pull the git repository to the server's code base
 - Reinstall and run the frontend's package
@@ -74,20 +81,20 @@ That basically do those steps:
 - [ ] Write project documentation and usage instructions
 
 ### UI/UX Design
-- [ ] Design UI mockups in Figma or Canva
+- [x] Design UI mockups in Figma or Canva
 - [ ] Conduct UI evaluation (Cognitive Walkthroughs, Think-Aloud)
 - [ ] Iterate on UI based on feedback
 
 ### Frontend
 - [x] Choose frontend framework (React.js with Vite)
 - [x] Set up Tailwind CSS for styling
-- [ ] Implement basic frontend layout and navigation
+- [x] Implement basic frontend layout and navigation
 - [ ] Integrate Google Maps API and GPX track display
 - [ ] Implement trail browsing and filtering features
 - [ ] Add trail detail pages with descriptions, photos, and maps
 
 ### Backend
-- [ ] Set up backend with Node.js (JavaScript/TypeScript)
+- [x] Set up backend with Node.js (JavaScript/TypeScript)
 - [ ] Design and create MongoDB database schema
 - [ ] Enable trail editing functionality for users
 - [ ] Populate database with sample trail data
