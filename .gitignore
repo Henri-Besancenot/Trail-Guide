@@ -39,3 +39,8 @@ dist-ssr
 .vite/
 
 .history/
+
+# amplify
+.amplify
+amplify_outputs*
+amplifyconfiguration*
