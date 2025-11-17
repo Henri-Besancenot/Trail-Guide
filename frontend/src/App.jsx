@@ -1,9 +1,17 @@
 import background from './assets/mountain-bg.jpg'
 import Searchbar from './components/Searchbar'
 import Template from './components/Template'
-
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 function App() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('query') || '';
+
+  const handleSearch = (q) => {
+    navigate(`trails/all?query=${encodeURIComponent(q)}`);
+  };
+
   return (
     <Template showBanner={false}>
       {/* Main content with background */}
@@ -32,7 +40,7 @@ function App() {
                 </h3>
                 <div className="flex justify-center items-center mt-5">
                   <Searchbar
-                    onSearch={(query) => console.log(query)}
+                    onSearch={handleSearch} value={query}
                     className="w-full max-w-md border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow"
                   />
                 </div>

@@ -56,22 +56,37 @@ const trails = {
     async search(filters) {
         const dbo = await database.getDbo();
         const query = {};
-
+    
         if (filters.query) {
             query.$or = [
               { title: { $regex: filters.query, $options: 'i' } },
               { description: { $regex: filters.query, $options: 'i' } }
             ];
-          }
+        }
+    
+        if (filters.minDistance && !isNaN(Number(filters.minDistance))) {
+          query.distance = { ...query.distance, $gte: Number(filters.minDistance) };
+        }
 
-          if (filters.maxDistance) query.distance = { ...query.distance, $lte: Number(filters.maxDistance) };
-          if (filters.minDistance) query.distance = { ...query.distance, $gte: Number(filters.minDistance) };
-          if (filters.elevation_gain) query.elevation_gain = { $lte: Number(filters.elevation_gain) };
-          if (filters.difficulty) query.difficulty = filters.difficulty;
-          if (filters.duration) query.duration = { $lte: Number(filters.duration) };
+        if (filters.maxDistance && !isNaN(Number(filters.maxDistance))) {
+          query.distance = { ...query.distance, $lte: Number(filters.maxDistance) };
+        }
 
+        if (filters.elevation_gain && !isNaN(Number(filters.elevation_gain))) {
+          query.elevation_gain = { $lte: Number(filters.elevation_gain) };
+        }
+
+        if (filters.duration && !isNaN(Number(filters.duration))) {
+          query.duration = { $lte: Number(filters.duration) };
+        }
+
+        if (filters.difficulty) {
+          query.difficulty = { $regex: `^${filters.difficulty}$`, $options: 'i' };
+        }
+    
         return await dbo.collection('trails').find(query).toArray();
     }
+    
 
 }
 

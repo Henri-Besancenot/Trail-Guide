@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Searchbar = ({ onSearch }) => {
-    const [query, setQuery] = useState('');
+const Searchbar = ({ onSearch, value }) => {
+    const [query, setQuery] = useState(value || '');
+
+    useEffect(() => {
+        setQuery(value || '');
+    }, [value]);
 
     const handleInputChange = (e) => {
         setQuery(e.target.value);

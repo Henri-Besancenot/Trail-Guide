@@ -1,25 +1,60 @@
 
 import Template from '../components/Template'
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 import TrailPreview from '../components/TrailPreview';
+import TrailFilters from '../components/TrailFilters';
 
 function TrailsList() {
   const { category } = useParams();
+  const [searchParams] = useSearchParams();
   const [trails, setTrails] = useState([]);
+  const [filters, setFilters] = useState({
+    query: searchParams.get('query') || '',
+    difficulty: '',
+    minDistance: '',
+    maxDistance: '',
+    duration: '',
+    elevation_gain: ''
+  });
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/trails/all')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
+    setFilters(prev => ({
+      ...prev,
+      query: searchParams.get('query') || ''
+    }));
+  }, [searchParams]);
+
+  useEffect(() => {
+    const fetchTrails = async () => {
+      const params = new URLSearchParams();
+  
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== '' && value !== null && value !== undefined) {
+          params.append(key, value);
+        }
+      });
+  
+      try {
+        const res = await fetch(`/api/trails/all?${params.toString()}`);
+        const data = await res.json();
         if (data.status && data.data) {
           setTrails(data.data);
         }
-      })
-      .catch(err => console.error('Error fetching trails:', err));
-  }, []);
+      } catch (err) {
+        console.error('Error fetching trails:', err);
+      }
+    };
+  
+    fetchTrails();
+  }, [filters]);
+  
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({ ...prev, [name]: value }));
+  };
 
   const getCategoryTitle = (category) => {
     switch (category) {
@@ -43,8 +78,7 @@ function TrailsList() {
         Here you can explore a variety of hiking trails categorized under "{getCategoryTitle(category)}". Whether you're looking for popular spots, nearby adventures, or just want to see all available trails, we've got you covered. Start your journey and discover the beauty of nature!
         </p>
 
-
-        {/* Actual Trail list */}
+        <TrailFilters filters={filters} onChange={handleFilterChange} />
 
         <div className="mt-8 space-y-8">
             {trails.length === 0 ? (
