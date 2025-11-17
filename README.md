@@ -17,9 +17,10 @@ Users can browse and edit trails, filter them by different criteria, and view de
 
 - **Frontend:** React.js with Vite, Tailwind CSS
 - **Backend:** JavaScript/TypeScript, Node.js
-- **Database:** MongoDB
+- **Database:** MongoDB (using MongoDB Atlas)
 - **Design & Prototyping:** Figma or Canva
 - **Maps & Visualization:** Google Maps API with GPX track display
+- **Server & Proxy:** The server is from AWS and use NGinx
 
 To populate the database, we may extract publicly available trail data, focusing on routes relevant to our chosen region.
 
@@ -42,6 +43,28 @@ cd frontend
 npm install
 npm run dev
 ```
+
+### The server
+
+It runs on 
+```
+/var/www/app
+  ├─ frontend   # React / Vite / Tailwind
+  └─ backend    # Node / Express / MongoDB
+```
+To access to this write `cd /var/www/app` in the server's terminal
+Once you want to deploy the code in the github repository, you need to run
+```bash
+cd /var/www/app
+./deploy.sh
+```
+
+That basically do those steps:
+- Pull the git repository to the server's code base
+- Reinstall and run the frontend's package
+- Reinstall and run the backend's package
+- Run the database (not yet implemented)
+
 
 ## To Do
 
