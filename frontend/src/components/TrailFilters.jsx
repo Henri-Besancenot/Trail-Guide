@@ -35,18 +35,24 @@ const TrailFilters = ({ filters, onChange }) => {
   };
 
   return (
-    <div className="bg-[#3C564C] p-6 rounded-lg shadow mb-8 space-y-4">
-      <h3 className="text-xl font-semibold mb-2 text-white ">Filters</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ">
+    <div className="bg-[#3C564C] p-6 rounded-2xl shadow mb-8 space-y-4">
+      <h3 className="text-xl font-semibold mb-2 text-white">Filters</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
-        {/* Search word (local until Search clicked) */}
+        {/* Search Title or Description*/}
         <input
           type="text"
           name="query"
           placeholder="Search by title or description"
           value={localQuery}
           onChange={(e) => setLocalQuery(e.target.value)}
-          className="p-2 border rounded w-full bg-white text-black"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSearchClick();
+            }
+          }}
+          className="p-2 border rounded-lg w-full bg-white text-black"
         />
 
         {/* Difficulty */}
@@ -54,7 +60,7 @@ const TrailFilters = ({ filters, onChange }) => {
           name="difficulty"
           value={localDifficulty}
           onChange={(e) => setLocalDifficulty(e.target.value)}
-          className="p-2 border rounded w-full bg-white text-black"
+          className="p-2 border rounded-lg w-full bg-white text-black"
         >
           <option value="">All difficulties</option>
           <option value="easy">Easy</option>
@@ -70,7 +76,14 @@ const TrailFilters = ({ filters, onChange }) => {
           placeholder="Min distance (km)"
           value={localMinDistance}
           onChange={(e) => setLocalMinDistance(e.target.value)}
-          className="p-2 border rounded w-full bg-white text-black"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSearchClick();
+            }
+          }}
+          className="p-2 border rounded-lg w-full bg-white text-black"
+
         />
 
         {/* Max Distance */}
@@ -80,7 +93,13 @@ const TrailFilters = ({ filters, onChange }) => {
           placeholder="Max distance (km)"
           value={localMaxDistance}
           onChange={(e) => setLocalMaxDistance(e.target.value)}
-          className="p-2 border rounded w-full bg-white text-black"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSearchClick();
+            }
+          }}
+          className="p-2 border rounded-lg w-full bg-white text-black"
         />
 
         {/* Duration */}
@@ -90,7 +109,13 @@ const TrailFilters = ({ filters, onChange }) => {
           placeholder="Max duration (minutes)"
           value={localDuration}
           onChange={(e) => setLocalDuration(e.target.value)}
-          className="p-2 border rounded w-full bg-white text-black"
+          className="p-2 border rounded-lg w-full bg-white text-black"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSearchClick();
+            }
+          }}
         />
 
         {/* Elevation Gain */}
@@ -100,7 +125,13 @@ const TrailFilters = ({ filters, onChange }) => {
           placeholder="Max elevation gain (m)"
           value={localElevationGain}
           onChange={(e) => setLocalElevationGain(e.target.value)}
-          className="p-2 border rounded w-full bg-white text-black"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSearchClick();
+            }
+          }}
+          className="p-2 border rounded-lg w-full bg-white text-black"
         /> 
 
       </div>
