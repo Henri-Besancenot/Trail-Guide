@@ -13,6 +13,7 @@
     "mongoose": "^8.18.1",
     "morgan": "^1.10.1",
     "node": "^24.9.0",
+    "react-modal-image": "^2.6.0",
     "rotating-file-stream": "^2.1.6"
   },
   "scripts": {
