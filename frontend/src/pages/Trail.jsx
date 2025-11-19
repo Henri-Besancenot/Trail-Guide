@@ -110,13 +110,28 @@ function Trail() {
             
 
             {/* Maps here */}
-            <div className="mt-6">
+            
+            <div className="mt-6 flex flex-col items-center col-span-1">
               <div
                 id="map"
                 ref={mapRef}
                 className="rounded-lg shadow"
-                style={{ height: "100%", width: "100%" }}
-              ></div>
+                style={{ height: "90%", width: "100%" }}
+              >  
+              </div>
+
+              {/* Download */}
+              <div className="mt-4">
+                {gpx_file && (
+                  <a
+                    href={gpx_file}
+                    download
+                    className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                  >
+                    Download GPX File
+                  </a>
+                )}
+              </div>
             </div>
           </div>
 

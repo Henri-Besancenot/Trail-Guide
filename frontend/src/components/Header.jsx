@@ -21,19 +21,12 @@ function Header() {
                 
           {/* Navigation Menu */}
           <Menubar className="border-0 bg-[#F3F3EB] shadow-none">
-            <MenubarMenu>
-              <MenubarTrigger className="cursor-pointer hover:bg-gray-100 data-[state=open]:bg-gray-100">
-                Homepage
-              </MenubarTrigger>
-              <MenubarContent className="bg-white">
-                <MenubarItem onClick={() => console.log('Navigate to Home')}>
-                  <Link to="/">Home</Link>
-                </MenubarItem>
-                <MenubarItem onClick={() => console.log('Navigate to Dashboard')}>
-                  <Link to="/">Dashboard</Link>
-                </MenubarItem>
-              </MenubarContent>
-            </MenubarMenu>
+            <Link
+              to="/"
+              className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100"
+            >
+              Home
+            </Link>
 
             <MenubarMenu>
               <MenubarTrigger className="cursor-pointer hover:bg-gray-100 data-[state=open]:bg-gray-100">
@@ -61,10 +54,7 @@ function Header() {
                 <Link to="/aboutus">About</Link>
                 </MenubarItem>
                 <MenubarItem onClick={() => console.log('Navigate to Contact')}>
-                  Contact
-                </MenubarItem>
-                <MenubarItem onClick={() => console.log('Navigate to Team')}>
-                  Our Team
+                  <Link to="/contact">Contact</Link>
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>

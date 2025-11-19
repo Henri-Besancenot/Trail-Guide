@@ -31,7 +31,7 @@ function TrailPreview({ trail }) {
     const shortDescription = description.length > 200 ? description.substring(0, 197) + '...' : description;
 
     return (
-        <div onClick={handleClick} className="border-2 bg-[#DADACC] border-solid rounded-4xl py-4">
+        <div onClick={handleClick} className="bg-[#DADACC] border-solid rounded-4xl py-4 transform transition duration-200 hover:scale-105 hover:shadow-xl">
             {/* Trail name & Difficulty */}
             <div className="flex px-6">
                 <h2 className="text-black text-xl font-semibold"> {title}</h2>
