@@ -1,6 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Template from '../components/Template';
+import ModalImage from "react-modal-image";
+
+// Leaflet for maps
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+
+// Import assets
 import hiking from '../assets/hiking.png';
 import increase from '../assets/increase2.svg';
 import clock from '../assets/clock.svg';
@@ -8,6 +15,8 @@ import clock from '../assets/clock.svg';
 function Trail() {
   const { id } = useParams();
   const [trail, setTrail] = useState(null);
+  const mapRef = useRef(null);
+  const mapInstance = useRef(null);
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/trails/all/${id}`)
@@ -19,6 +28,25 @@ function Trail() {
       })
       .catch(err => console.error(err));
   }, [id]);
+
+  // Initialize map when trail data is loaded
+  useEffect(() => {
+    if (!trail) return;
+    if (!mapRef.current) return;
+    if (mapInstance.current) return; // prevent double init
+
+    const lat = trail.latitude || 46.5;   // default values
+    const lng = trail.longitude || 2.6;
+
+    mapInstance.current = L.map(mapRef.current).setView([lat, lng], 13);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(mapInstance.current);
+
+    L.marker([lat, lng]).addTo(mapInstance.current);
+  }, [trail]);
 
   if (!trail) return <p className="text-center mt-10">Loading trail...</p>;
 
@@ -33,57 +61,66 @@ function Trail() {
 
   return (
     <Template bannerTitle={title} bannerSubtitle={`Difficulty: ${difficulty}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-        
-        {/* Trail Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-[#F3F3EB] p-6 rounded-2xl shadow">
-          <div className="flex items-center">
-            <img src={hiking} alt="distance" className="w-10 h-10 bg-white p-2 rounded-full" />
-            <p className="ml-2">{distance / 1000} km</p>
+      <div className="w-full px-4 py-6">
+        <div className="bg-[#E4DEDE] w-full min-h-64 p-6 rounded-xl">
+
+          <div className="grid grid-cols-3">
+            {/* Your existing details… */}
+            <div className= "col-span-2 pr-6">
+              <h2 className="text-2xl font-bold mb-4 py-2">{title}</h2>
+              <p className="text-gray-700 mb-4 text-lg py-2">{description}</p>
+
+              {/* Information and data */}
+              <div className="bg-[#ECEDE0] w-full min-h-10 rounded-xl mx-auto">
+                <h3 className="text-xl font-semibold mb-4 mt-4 py-2 px-4">Details</h3>
+                <div className= "grid grid-cols-2 gap-4 px-4 pb-4">
+
+                  <div className="flex items-center">
+                    <img src={hiking} alt="distance" className="w-10 h-10 bg-white p-2 rounded-full" /> 
+                    <p className="ml-2">{trail.distance / 1000} km</p>
+                  </div>
+
+                  <div className="flex items-center">
+                    <img src={clock} alt="duration" className="w-10 h-10 bg-white p-2 rounded-full" />
+                    <p className="ml-2">{Math.floor(trail.duration / 60)}h{trail.duration % 60}min</p>
+                  </div>
+
+                  <div className="flex items-center">
+                    <img src={increase} alt="elevation" className="w-10 h-10 bg-white p-2 rounded-full" />
+                    <p className="ml-2">{trail.elevation_gain} m</p>
+                  </div>
+
+                  {/* <p><strong>Difficulty:</strong> {trail.difficulty}</p> */}
+                </div>
+              </div>
+
+              {/* Images */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-6">
+                {images && images.map((img, idx) => (
+                  <ModalImage
+                    key={idx}
+                    small={img}
+                    large={img}
+                    alt={`Trail Image ${idx + 1}`}
+                    className="w-full h-64 object-cover rounded-lg shadow transform hover:scale-105 transition-transform duration-300 cursor-pointer"
+                  />
+                ))}
+              </div>
+            </div>
+            
+
+            {/* Maps here */}
+            <div className="mt-6">
+              <div
+                id="map"
+                ref={mapRef}
+                className="rounded-lg shadow"
+                style={{ height: "100%", width: "100%" }}
+              ></div>
+            </div>
           </div>
 
-          <div className="flex items-center">
-            <img src={clock} alt="duration" className="w-10 h-10 bg-white p-2 rounded-full" />
-            <p className="ml-2">{Math.floor(duration / 60)}h{duration % 60}min</p>
-          </div>
-
-          <div className="flex items-center">
-            <img src={increase} alt="elevation" className="w-10 h-10 bg-white p-2 rounded-full" />
-            <p className="ml-2">{elevation_gain} m</p>
-          </div>
         </div>
-
-        {/* Description */}
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <h2 className="text-2xl font-bold mb-4">About this Trail</h2>
-          <p className="text-gray-700">{description}</p>
-        </div>
-
-        {/* Images */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {images && images.map((img, idx) => (
-            <img
-              key={idx}
-              src={img}
-              alt={`Trail Image ${idx + 1}`}
-              className="w-full h-64 object-cover rounded-lg shadow"
-            />
-          ))}
-        </div>
-
-        {/* GPX / Map download (optional) */}
-        {gpx_file && (
-          <div className="mt-6">
-            <a
-              href={gpx_file}
-              download
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-            >
-              Download GPX File
-            </a>
-          </div>
-        )}
-
       </div>
     </Template>
   );

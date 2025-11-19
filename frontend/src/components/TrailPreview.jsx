@@ -73,7 +73,7 @@ function TrailPreview({ trail }) {
                         <img
                             src={img}
                             alt={`${trail.title} ${index + 1}`}
-                            className="w-full h-auto object-cover"
+                            className="w-full h-auto object-cover rounded-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
                         />
                         </div>
                     ))}
