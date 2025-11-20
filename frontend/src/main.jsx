@@ -9,10 +9,10 @@ import App from './App.jsx'
 import Contact from './pages/Contact.jsx';
 import LoginSignUp from './pages/LoginSignUp.jsx';
 import MyProfile from './pages/MyProfile.jsx';
+import CreateTrail from './pages/CreateTrail.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 
 import './index.css'
-
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -26,6 +26,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<LoginSignUp />} />
           <Route path="/users/:id" element={<MyProfile />} />
+          <Route path="/trails/new" element={<CreateTrail />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

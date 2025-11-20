@@ -26,7 +26,7 @@ const trails = {
             description: trail.description || "",
             distance: trail.distance || 0,
             elevation_gain:  trail.elevation_gain || 0,
-            difficulty: trail.difficulty || "easy",
+            difficulty: trail.difficulty || "Easy",
             duration: trail.duration || 0,
             images: Array.isArray(trail.images) ? trail.images : [],
             gpx_file: trail.gpx_file || ""

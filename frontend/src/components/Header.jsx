@@ -74,7 +74,7 @@ function Header() {
                 </MenubarTrigger>
                 <MenubarContent className="bg-white">
                   <MenubarItem onClick={() => console.log('Navigate to My profile')}>
-                  <Link to="/users/:id">My profile</Link>
+                  <Link to={`/users/${user._id}`}>My profile</Link>
                   </MenubarItem>
                   <MenubarItem onClick={logout}>
                     <Link to="/contact">Logout</Link>

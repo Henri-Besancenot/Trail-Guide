@@ -27,6 +27,11 @@ module.exports = {
       throw { code: status.BAD_REQUEST, message: 'You must specify name and email' };
     
     const { name, email, password } = req.body;
+
+    const alreadyUser = await userModel.getByEmail(email);
+    if (alreadyUser)
+      throw { code: status.BAD_REQUEST, message: 'Email already used' };
+
     const passhash = await bcrypt.hash(password, 10);
     const newUser = await userModel.create({ name, email, passhash });
     res.json({ status: true, message: 'User added', data: newUser });

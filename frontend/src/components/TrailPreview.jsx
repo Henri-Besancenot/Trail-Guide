@@ -28,6 +28,12 @@ function TrailPreview({ trail }) {
         Expert: 'bg-purple-500',
     };
 
+    function normalizeDifficulty(diff) {
+        if (!diff) return "Easy";
+        return diff.charAt(0).toUpperCase() + diff.slice(1).toLowerCase();
+    }
+    const normalizedDifficulty = normalizeDifficulty(difficulty);
+
     const shortDescription = description.length > 200 ? description.substring(0, 197) + '...' : description;
 
     return (
@@ -35,7 +41,9 @@ function TrailPreview({ trail }) {
             {/* Trail name & Difficulty */}
             <div className="flex px-6">
                 <h2 className="text-black text-xl font-semibold"> {title}</h2>
-                <span className={`text-sm text-white text-center ml-4 mr-4 px-2 py-1 ${DifficultyColors[difficulty]} rounded-lg`}>{difficulty}</span>
+                <span className={`text-sm text-white text-center ml-4 mr-4 px-2 py-1 ${DifficultyColors[normalizedDifficulty]} rounded-lg`}>
+                    {normalizedDifficulty}
+                </span>
             </div>
 
             {/* Trails quick details */}
