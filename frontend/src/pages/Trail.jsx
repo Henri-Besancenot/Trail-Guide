@@ -19,15 +19,31 @@ function Trail() {
   const mapInstance = useRef(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/trails/all/${id}`)
-      .then(res => res.json())
-      .then(data => {
+    const fetchTrail = async () => {
+      try {
+        const response = await fetch(`/api/trails/all/${id}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+  
+        const data = await response.json();
+  
+        if (!response.ok) {
+          console.error(data.message || "Error while fetching trail");
+          return;
+        }
+  
         if (data.status && data.data) {
           setTrail(data.data);
         }
-      })
-      .catch(err => console.error(err));
-  }, [id]);
+  
+      } catch (error) {
+        console.error("Server error:", error);
+      }
+    };
+  
+    fetchTrail();
+  }, [id]);  
 
   // Initialize map when trail data is loaded
   useEffect(() => {
@@ -52,13 +68,6 @@ function Trail() {
 
   const { title, difficulty, distance, duration, elevation_gain, description, images, gpx_file } = trail;
 
-  const DifficultyColors = {
-    Easy: 'bg-green-500',
-    Medium: 'bg-yellow-500',
-    Hard: 'bg-red-500',
-    Expert: 'bg-purple-500',
-  };
-
   return (
     <Template bannerTitle={title} bannerSubtitle={`Difficulty: ${difficulty}`}>
       <div className="w-full px-4 py-6">
@@ -77,17 +86,17 @@ function Trail() {
 
                   <div className="flex items-center">
                     <img src={hiking} alt="distance" className="w-10 h-10 bg-white p-2 rounded-full" /> 
-                    <p className="ml-2">{trail.distance / 1000} km</p>
+                    <p className="ml-2">{distance / 1000} km</p>
                   </div>
 
                   <div className="flex items-center">
                     <img src={clock} alt="duration" className="w-10 h-10 bg-white p-2 rounded-full" />
-                    <p className="ml-2">{Math.floor(trail.duration / 60)}h{trail.duration % 60}min</p>
+                    <p className="ml-2">{Math.floor(trail.duration / 60)}h{duration % 60}min</p>
                   </div>
 
                   <div className="flex items-center">
                     <img src={increase} alt="elevation" className="w-10 h-10 bg-white p-2 rounded-full" />
-                    <p className="ml-2">{trail.elevation_gain} m</p>
+                    <p className="ml-2">{elevation_gain} m</p>
                   </div>
 
                   {/* <p><strong>Difficulty:</strong> {trail.difficulty}</p> */}

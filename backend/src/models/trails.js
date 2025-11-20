@@ -83,8 +83,30 @@ const trails = {
         if (filters.difficulty) {
           query.difficulty = { $regex: `^${filters.difficulty}$`, $options: 'i' };
         }
+
+        // let sort = {};
+        // if (filters.sortBy) {
+        //     const order = filters.order === 'desc' ? -1 : 1;
+        //     if (filters.sortBy === 'difficulty') {
+        //         return await dbo.collection('trails').aggregate([
+        //             { $match: query },
+        //             { $addFields: { difficultyValue: { $switch: {
+        //                 branches: [
+        //                     { case: { $eq: ["$difficulty", "easy"] }, then: 1 },
+        //                     { case: { $eq: ["$difficulty", "medium"] }, then: 2 },
+        //                     { case: { $eq: ["$difficulty", "hard"] }, then: 3 },
+        //                     { case: { $eq: ["$difficulty", "expert"] }, then: 4 }
+        //                 ],
+        //                 default: 0
+        //             }}}},
+        //             { $sort: { difficultyValue: order } }
+        //         ]).toArray();
+        //     } else {
+        //         sort[filters.sortBy] = order;
+        //     }
+        // }
     
-        return await dbo.collection('trails').find(query).toArray();
+        return await dbo.collection('trails').find(query).toArray(); //.sort(sort)
     }
     
 

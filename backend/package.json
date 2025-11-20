@@ -9,6 +9,7 @@
     "has-keys": "^0.1.0",
     "helmet": "^8.1.0",
     "http-status": "^2.1.0",
+    "leaflet": "^1.9.4",
     "mandatoryenv": "^3.0.4",
     "mongoose": "^8.18.1",
     "morgan": "^1.10.1",

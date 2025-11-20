@@ -47,5 +47,25 @@ module.exports = {
     const { id } = req.params;
     await userModel.delete(id);
     res.json({ status: true, message: 'User deleted' });
+  },
+
+  async loginUser(req, res) {
+    if (!has(req.body, ['email', 'password']))
+      throw { code: status.BAD_REQUEST, message: 'You must specify your email and password' };
+    
+    const { email, password } = req.body;
+    const user = await userModel.getByEmail(email);
+
+    if (!user)
+      throw { code: status.NOT_FOUND, message: "The user doesn't exist" };
+
+    const goodPass = bcrypt.compare(password, user.passhash);
+
+    if (!goodPass)
+      throw { code: status.UNAUTHORIZED, message: 'Invalid password' };
+
+    delete user.passhash;
+
+    res.json({ status: true, message: 'Login successful', data: user });
   }
 };

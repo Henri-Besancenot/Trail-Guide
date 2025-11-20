@@ -4,6 +4,7 @@ const user = require('../controllers/user.js');
 
 router.get('/api/users', user.getUsers);
 router.get('/api/users/:id', user.getUserById);
+router.post('/api/users/login', user.loginUser);
 router.post('/api/users', user.createUser);
 router.put('/api/users', user.updateUser);
 router.delete('/users/:id', user.deleteUser);

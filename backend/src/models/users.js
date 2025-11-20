@@ -15,6 +15,10 @@ const users = {
     const dbo = await database.getDbo();
     return await dbo.collection('users').findOne({ _id: toObjectId(id) });
   },
+  async getByEmail(email) {
+    const dbo = await database.getDbo();
+    return await dbo.collection('users').findOne({ email });
+  },
   async create(user) {
     const dbo = await database.getDbo();
 

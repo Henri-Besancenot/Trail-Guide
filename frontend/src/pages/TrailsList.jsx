@@ -37,7 +37,11 @@ function TrailsList() {
       });
   
       try {
-        const res = await fetch(`/api/trails/all?${params.toString()}`);
+        const res = await fetch(`/api/trails/all/${params.toString()}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+  
         const data = await res.json();
         if (data.status && data.data) {
           setTrails(data.data);
