@@ -51,7 +51,7 @@ To access the AWS EC2 instance, you need to connect to
 https://670339745902.signin.aws.amazon.com/console
 ```
 And login using the username and password that has been given to you.
-You then need to access to the AWS console -> search for EC2 -> Instances -> click on the ID -> Connect -> Connect. You'll then be on the EC2 Instance Connect.
+You then need to access to the AWS console -> search for EC2 -> Show the dashboard -> Instances -> click on the ID -> Connect -> Connect. You'll then be on the EC2 Instance Connect.
 /!\ To see the instance, you need to be connected to the Francfort eu-central-1 server.
 
 
