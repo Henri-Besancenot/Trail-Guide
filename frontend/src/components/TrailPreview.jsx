@@ -76,7 +76,7 @@ function TrailPreview({ trail }) {
                 {/* Images */}
                 <div className="grid grid-cols-2 md:grid-cols-2 gap-4 w-3xs mx-auto">
                     {/* Photo */}
-                    {trail.images.map((img, index) => (
+                    {trail.images.filter(img => img).map((img, index) => (
                         <div key={index} className="overflow-hidden rounded-lg">
                         <img
                             src={img}

@@ -1,37 +1,25 @@
-import { Button } from 'bootstrap';
-import React from 'react';
+import {useState, useEffect} from 'react';
 
 const TrailFilters = ({ filters, onChange }) => {
-  const [localQuery, setLocalQuery] = React.useState(filters.query || '');
-  const [localDifficulty, setLocalDifficulty] = React.useState(filters.difficulty || '');
-  const [localMinDistance, setLocalMinDistance] = React.useState(filters.minDistance || '');
-  const [localMaxDistance, setLocalMaxDistance] = React.useState(filters.maxDistance || '');
-  const [localDuration, setLocalDuration] = React.useState(filters.duration || '');
-  const [localElevationGain, setLocalElevationGain] = React.useState(filters.elevation_gain || '');
+  const [localFilters, setLocalFilters] = useState(filters);
 
-  React.useEffect(() => {
-    // keep local controls in sync when parent filters change externally
-    setLocalDifficulty(filters.difficulty || '');
-    setLocalMinDistance(filters.minDistance || '');
-    setLocalMaxDistance(filters.maxDistance || '');
-    setLocalDuration(filters.duration || '');
-    setLocalElevationGain(filters.elevation_gain || '');
-  }, [
-    filters.difficulty,
-    filters.minDistance,
-    filters.maxDistance,
-    filters.duration,
-    filters.elevation_gain,
-  ]);
+  useEffect(() => {
+    setLocalFilters(filters);
+  }, [filters]);
+
+  const handleInputChange = (e) => {
+    setLocalFilters({ ...localFilters, [e.target.name]: e.target.value })
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearchClick();
+    }
+  }
 
   const handleSearchClick = () => {
-    // propagate all local values to parent only when Search is clicked
-    onChange({ target: { name: 'query', value: localQuery } });
-    onChange({ target: { name: 'difficulty', value: localDifficulty } });
-    onChange({ target: { name: 'minDistance', value: localMinDistance } });
-    onChange({ target: { name: 'maxDistance', value: localMaxDistance } });
-    onChange({ target: { name: 'duration', value: localDuration } });
-    onChange({ target: { name: 'elevation_gain', value: localElevationGain } });
+    onChange(localFilters);
   };
 
   return (
@@ -44,22 +32,17 @@ const TrailFilters = ({ filters, onChange }) => {
           type="text"
           name="query"
           placeholder="Search by title or description"
-          value={localQuery}
-          onChange={(e) => setLocalQuery(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              handleSearchClick();
-            }
-          }}
+          value={localFilters.query || ''}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           className="p-2 border rounded-lg w-full bg-white text-black"
         />
 
         {/* Difficulty */}
         <select
           name="difficulty"
-          value={localDifficulty}
-          onChange={(e) => setLocalDifficulty(e.target.value)}
+          value={localFilters.difficulty || ''}
+          onChange={handleInputChange}
           className="p-2 border rounded-lg w-full bg-white text-black"
         >
           <option value="">All difficulties</option>
@@ -74,14 +57,9 @@ const TrailFilters = ({ filters, onChange }) => {
           type="number"
           name="minDistance"
           placeholder="Min distance (km)"
-          value={localMinDistance}
-          onChange={(e) => setLocalMinDistance(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              handleSearchClick();
-            }
-          }}
+          value={localFilters.minDistance || ''}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           className="p-2 border rounded-lg w-full bg-white text-black"
 
         />
@@ -91,14 +69,9 @@ const TrailFilters = ({ filters, onChange }) => {
           type="number"
           name="maxDistance"
           placeholder="Max distance (km)"
-          value={localMaxDistance}
-          onChange={(e) => setLocalMaxDistance(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              handleSearchClick();
-            }
-          }}
+          value={localFilters.maxDistance}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           className="p-2 border rounded-lg w-full bg-white text-black"
         />
 
@@ -107,15 +80,10 @@ const TrailFilters = ({ filters, onChange }) => {
           type="number"
           name="duration"
           placeholder="Max duration (minutes)"
-          value={localDuration}
-          onChange={(e) => setLocalDuration(e.target.value)}
+          value={localFilters.duration}
+          onChange={handleInputChange}
           className="p-2 border rounded-lg w-full bg-white text-black"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              handleSearchClick();
-            }
-          }}
+          onKeyDown={handleKeyDown}
         />
 
         {/* Elevation Gain */}
@@ -123,14 +91,9 @@ const TrailFilters = ({ filters, onChange }) => {
           type="number"
           name="elevation_gain"
           placeholder="Max elevation gain (m)"
-          value={localElevationGain}
-          onChange={(e) => setLocalElevationGain(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              handleSearchClick();
-            }
-          }}
+          value={localFilters.elevation_gain}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           className="p-2 border rounded-lg w-full bg-white text-black"
         /> 
 
