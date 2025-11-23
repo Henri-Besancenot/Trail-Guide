@@ -10,6 +10,7 @@ import Contact from './pages/Contact.jsx';
 import LoginSignUp from './pages/LoginSignUp.jsx';
 import MyProfile from './pages/MyProfile.jsx';
 import CreateTrail from './pages/CreateTrail.jsx';
+import NearbyTrails from './pages/NearbyTrails.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 
 import './index.css'
@@ -20,8 +21,9 @@ createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/trails/:category" element={<TrailsList />} />
+          <Route path="/trails/all" element={<TrailsList />} />
           <Route path="/trails/all/:id" element={<Trail />} />
+          <Route path="/trails/nearby" element={<NearbyTrails />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<LoginSignUp />} />
