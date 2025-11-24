@@ -122,12 +122,6 @@ function Trail() {
             {/* Maps here */}
             
             <div className="mt-6 flex flex-col items-center col-span-1">
-              {/* <div
-                id="map"
-                ref={mapRef}
-                className="rounded-lg shadow"
-                style={{ height: "90%", width: "100%" }}>
-              </div> */}
 
               <GPXMap gpxUrl={gpx_file} />
 

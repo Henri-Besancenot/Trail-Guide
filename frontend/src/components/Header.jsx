@@ -64,13 +64,31 @@ function Header() {
             </MenubarMenu>
 
             {!user ? (
-              <Link to="/login" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
-                Login / Sign up
-              </Link>
+              <MenubarMenu>
+                <MenubarTrigger className="cursor-pointer hover:bg-gray-100 data-[state=open]:bg-gray-100">
+                  <img src="/src/assets/defaultprofilpicture.png" alt="Login" className="h-8 w-8 rounded-full" />
+                </MenubarTrigger>
+                <MenubarContent className="bg-white">
+                  <MenubarItem onClick={() => console.log('Navigate to Login')}>
+                    <Link to="/login">Login</Link>
+                  </MenubarItem>
+                  <MenubarItem onClick={() => console.log('Navigate to Sign Up')}>
+                    <Link to="/signup">Sign Up</Link>
+                  </MenubarItem>
+                </MenubarContent>
+              </MenubarMenu>
+              
             ) : (
               <MenubarMenu>
                 <MenubarTrigger className="cursor-pointer hover:bg-gray-100 data-[state=open]:bg-gray-100">
-                {user.name}
+                  <div className="items-center space-x-2 wrap-inline-flex">
+                    <img 
+                      src={user.image ? user.image : "/src/assets/defaultprofilpicture.png"} 
+                      alt="Profile" 
+                      className="h-8 w-8 rounded-full object-cover" 
+                    />
+                    {user.name}
+                  </div>
                 </MenubarTrigger>
                 <MenubarContent className="bg-white">
                   <MenubarItem onClick={() => console.log('Navigate to My profile')}>
