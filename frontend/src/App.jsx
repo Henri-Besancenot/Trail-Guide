@@ -1,5 +1,5 @@
 import background from './assets/mountain-bg.jpg'
-import Searchbar from './components/Searchbar'
+import Searchbar from './components/ui/Searchbar'
 import Template from './components/Template'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 

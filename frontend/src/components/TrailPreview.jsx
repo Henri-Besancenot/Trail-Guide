@@ -74,14 +74,14 @@ function TrailPreview({ trail }) {
                 </div>
 
                 {/* Images */}
-                <div className="grid grid-cols-2 md:grid-cols-2 gap-4 w-3xs mx-auto">
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-4 w-3xs mx-auto auto-rows-fr">
                     {/* Photo */}
-                    {trail.images.filter(img => img).map((img, index) => (
-                        <div key={index} className="overflow-hidden rounded-lg">
+                    {trail.images.filter(img => img).slice(0, 4).map((img, index) => (
+                        <div key={index} className="overflow-hidden rounded-lg h-24 w-full">
                         <img
                             src={img}
                             alt={`${trail.title} ${index + 1}`}
-                            className="w-full h-auto object-cover rounded-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
+                            className="w-full h-full object-cover rounded-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
                         />
                         </div>
                     ))}

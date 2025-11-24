@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Template from '../components/Template';
 import ModalImage from "react-modal-image";
+import GPXMap from '../components/GPXMap';
 
 // Leaflet for maps
 import L from "leaflet";
@@ -67,7 +68,7 @@ function Trail() {
   if (!trail) return <p className="text-center mt-10">Loading trail...</p>;
 
   const { title, difficulty, distance, duration, elevation_gain, description, images, gpx_file } = trail;
-
+  console.log("GPX File URL:", gpx_file);
   return (
     <Template bannerTitle={title} bannerSubtitle={`Difficulty: ${difficulty}`}>
       <div className="w-full px-4 py-6">
@@ -121,13 +122,14 @@ function Trail() {
             {/* Maps here */}
             
             <div className="mt-6 flex flex-col items-center col-span-1">
-              <div
+              {/* <div
                 id="map"
                 ref={mapRef}
                 className="rounded-lg shadow"
-                style={{ height: "90%", width: "100%" }}
-              >  
-              </div>
+                style={{ height: "90%", width: "100%" }}>
+              </div> */}
+
+              <GPXMap gpxUrl={gpx_file} />
 
               {/* Download */}
               <div className="mt-4">
