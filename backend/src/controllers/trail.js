@@ -23,11 +23,11 @@ module.exports = {
       },
     
       async createTrail(req, res) {
-        if (!has(req.body, ['title', 'description', 'distance', 'elevation_gain', 'difficulty', 'duration', 'images', 'gpx_file']))
+        if (!has(req.body, ['title', 'description', 'user', 'distance', 'elevation_gain', 'difficulty', 'duration', 'images', 'gpx_file']))
           throw { status: status.BAD_REQUEST, message: 'You must specify all the informations needed' };
         
-        const { title, description, distance, elevation_gain, difficulty, duration, images, gpx_file } = req.body;
-        const newTrail = await trailModel.create({ title, description, distance, elevation_gain, difficulty, duration, images, gpx_file });
+        const { title, description, user, distance, elevation_gain, difficulty, duration, images, gpx_file } = req.body;
+        const newTrail = await trailModel.create({ title, description, user, distance, elevation_gain, difficulty, duration, images, gpx_file });
         res.json({ status: true, message: 'Trail added', data: newTrail });
       },
     

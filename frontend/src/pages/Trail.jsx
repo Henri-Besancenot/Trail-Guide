@@ -105,7 +105,7 @@ function Trail() {
             {/* Your existing details… */}
             <div className= "col-span-2 pr-6">
               <div className="flex items-center mb-4">
-                <h2 className="text-2xl font-bold mb-4 py-2">{title}</h2>
+                <h2 className="text-2xl font-bold mb-1">{title}</h2>
                 { user && <div className="cursor-pointer"
                     onClick={ () => {
                       const isFavorite = user.favorite.includes(trail._id);
@@ -121,6 +121,7 @@ function Trail() {
                     </svg>
                 </div> }
                 </div>
+                <h2 className="text-gray-500 italic text-mg mt-0 mb-4">Trail uploaded by {trail.user.name}</h2>
               
               <p className="text-gray-700 mb-4 text-lg py-2">{description}</p>
 

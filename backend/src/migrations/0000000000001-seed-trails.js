@@ -7,6 +7,7 @@ async function up() {
     {
       title: "Töölö bay Tour",
       description: "In Töölönlahti, you can experience both sides of Helsinki: the vibrant culture, city life, and the peace of nature. You can admire historic architecture, museums, parks, and an amusement park along the route. There is a lot to admire along the way. Töölönlahti Park has concrete slabs with historical maps of the area. Even rainwater gutters are works of art. There are also fitness equipment and children’s play areas along the route.",
+      user: {name: "TrailGuide"},
       distance: 2100,
       elevation_gain: 16,
       duration: 35,
@@ -17,6 +18,7 @@ async function up() {
     {
       title: "Pieni Karhunkierros Trail",
       description: "Small Karhunkierros runs to the southern part of Oulanka National Park. Here you will find rapids, cliffs, and forests; the route has large elevation differences in some places. Along the route there are three suspension bridges, several campfire sites, a lean-to, a wilderness hut, and an open-sided shelter. The cliffs have a steep ascent and steps.",
+      user: {name: "TrailGuide"},
       distance: 11700,
       elevation_gain: 251,
       difficulty: "Medium",
@@ -27,6 +29,7 @@ async function up() {
     {
       title: "Haukankierros",
       description: "Nuuksio National Park is close to the Helsinki metropolitan area, and a great place for a variety of activities. The Hawk Circuit starts from the Haukkalampi nature hut and goes around Haukkalampi. There is a handsome forest landscape along the route and peat rafts drifting in Mustalammi are a local attraction.",
+      user: {name: "TrailGuide"},
       distance: 3900,
       elevation_gain: 104,
       difficulty: "Hard",
@@ -37,6 +40,7 @@ async function up() {
     {
       title: "Mäkrän Kierto Trail",
       description: "Mäkrän Kierto Trail is the most popular day hike in Koli National Park. Along the way you can admire the most beautiful landscapes and natural attractions. At the top of Mäkrävaara is the “Järnefelt Pine”, a pine painted by the artist. The work “Landscape from Koli” is on display at the Anteneum in Helsinki.",
+      user: {name: "TrailGuide"},
       distance: 7600,
       elevation_gain: 284,
       difficulty: "Medium",
@@ -47,6 +51,7 @@ async function up() {
     {
       title: "Juutua Trail",
       description: "The Juutua Trail has collected stories about travelers, events and fishing in Juutua. The texts of the Juutua path are also in Inari Sámi, the first and so far the only nature path where this has been implemented. The illustration is by Inari artist Merja Aletta Ranttila.",
+      user: {name: "TrailGuide"},
       distance: 6800,
       elevation_gain: 129,
       difficulty: "Easy",
@@ -57,6 +62,7 @@ async function up() {
     {
       title: "Saana Path",
       description: "The Saana path starts from the parking area of Malla Nature Park and goes to the top of Saana fell and back. From the top you can enjoy stunning views and on the way you can experience the stairs of Saana. In clear weather, the views extend as far as the Lyngen Fjord.",
+      user: {name: "TrailGuide"},
       distance: 8500,
       elevation_gain: 556,
       difficulty: "Hard",
@@ -67,6 +73,7 @@ async function up() {
     {
       title: "Riisin Rääpäsy",
       description: "Riisin rääpäsy is an easier route at Riisitunturi. The route offers excellent views of the northeastern lake and forest landscape. In the autumn, you can admire the fall colors.",
+      user: {name: "TrailGuide"},
       distance: 4500,
       elevation_gain: 116,
       difficulty: "Medium",
@@ -77,6 +84,7 @@ async function up() {
     {
       title: "Three Country Cairn",
       description: "The Three Country Cairn is in Käsivarsi Lapland, in the corner where the borders of Finland, Sweden, and Norway meet. This trail starts from the Malla and Saana car park and follows the Arctic Trail through the Malla Nature Park. Along the way is the Kitsiputous, and the reservation and wilderness huts of Kuohkimajärvi are near the border cairn.",
+      user: {name: "TrailGuide"},
       distance: 20900,
       elevation_gain: 799,
       difficulty: "Hard",
@@ -87,6 +95,7 @@ async function up() {
     {
       title: "Lake Savojärvi Trail",
       description: "Kurjenrahka National Park is close to the culture city of Turku. As the name implies, the park is home to cranes, but there are many other animal species to be found here.",
+      user: {name: "TrailGuide"},
       distance: 6300,
       elevation_gain: 159,
       difficulty: "Easy",
