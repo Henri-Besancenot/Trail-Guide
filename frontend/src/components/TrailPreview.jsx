@@ -38,12 +38,34 @@ function TrailPreview({ trail }) {
 
     return (
         <div onClick={handleClick} className="bg-[#DADACC] border-solid rounded-4xl py-4 transform transition duration-200 hover:scale-105 hover:shadow-xl">
-            {/* Trail name & Difficulty */}
+            {/*  Trail name & Difficulty */}
             <div className="flex px-6">
+                {/* Name */}
                 <h2 className="text-black text-xl font-semibold"> {title}</h2>
+
+                {/* Difficulty */}
                 <span className={`text-sm text-white text-center ml-4 mr-4 px-2 py-1 ${DifficultyColors[normalizedDifficulty]} rounded-lg`}>
                     {normalizedDifficulty}
                 </span>
+
+                {/* Favorite Icon */}
+                <div className="cursor-pointer"
+                    onClick={(e) => {
+                        e.stopPropagation(); // Prevent triggering the parent onClick
+                        // Add logic here to toggle favorite state
+                    }}
+                >
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        strokeWidth={1.5} 
+                        stroke="currentColor" 
+                        className="w-8 h-8 text-yellow-500 hover:fill-yellow-500 transition-colors duration-200"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.545.044.77.77.326 1.163l-4.304 3.86a.562.562 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.304-3.86a.562.562 0 01.326-1.163l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                    </svg>
+                </div>
             </div>
 
             {/* Trails quick details */}
