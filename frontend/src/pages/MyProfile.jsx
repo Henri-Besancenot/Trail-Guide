@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Carousel from '@/components/Carousel';
+import { useNavigate } from "react-router-dom";
 
 import { useAuthStore } from "../store/authStore"
 import Template from '../components/Template'
@@ -7,12 +8,14 @@ import Template from '../components/Template'
 function MyProfile() {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
+  const logout = useAuthStore((state) => state.logout);
+  const navigate = useNavigate();
   const [editing, setEditing] = useState(false);
-  const [tempUsername, setTempUsername] = useState(user? user.name : "");
-  const [tempEmail, setTempEmail] = useState(user? user.email : "");
+  const [tempUsername, setTempUsername] = useState(user.name);
+  const [tempEmail, setTempEmail] = useState(user.email);
   const [message, setMessage] = useState("");
 
-  const handleSave = async (e) => {
+  const handleSave = async () => {
     const response = await fetch(`/api/users/${user._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -39,6 +42,21 @@ function MyProfile() {
     setTempEmail(user.email);
     setEditing(false);
     setMessage("");
+  };
+
+  const handleDelete = async () => {
+    const response = await fetch(`/api/users/${user._id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        _id: user._id
+      })
+    });
+
+    if (response.ok) {
+      logout();
+      navigate("/");
+    }
   };
 
   return (
@@ -110,12 +128,15 @@ function MyProfile() {
           </div>
 
           {/* Section about the hike that the user has completed or is interested in */}
-          <Carousel title="Favorite Hikes" hikeIds= {[1,2,3]} />
+          <Carousel title="Favorite Hikes" hikeIds= {user.favorite} />
 
 
           {/* Section about the hikes that the user created */}
-          <Carousel title="Created Hikes" hikeIds= {[1,2]} addButton={true} />
+          <Carousel title="Created Hikes" hikeIds= {user.favorite} addButton={true} />
           
+          <button onClick={handleDelete} className="block mx-auto mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              Delete Profile
+          </button>
         </div>
       </div>
     </Template>

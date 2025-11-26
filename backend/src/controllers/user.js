@@ -48,7 +48,6 @@ module.exports = {
     }
 
     const updatedUser = await userModel.update(req.body);
-    console.log("updated user :", updatedUser)
     res.json({ status: true, message: 'User updated', data: updatedUser });
   },
 
@@ -79,5 +78,13 @@ module.exports = {
     delete user.passhash;
 
     res.json({ status: true, message: 'Login successful', data: user });
+  },
+
+  async updateUserFavorites(req, res) {
+    if (!has(req.body, ['_id', 'favorite', 'toAdd']))
+      throw { status: status.BAD_REQUEST, message: 'Miss some information' };
+
+    const updatedUser = await userModel.updateFavorites(req.body);
+    res.json({ status: true, message: 'Favorites updated', data: updatedUser });
   }
 };

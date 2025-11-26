@@ -9,7 +9,7 @@ module.exports = {
         
         const { id } = req.params;
         const data = await trailModel.getById(id);
-        
+
         if (!data)
           throw { status: status.NOT_FOUND, message: 'Trail not found' };
         

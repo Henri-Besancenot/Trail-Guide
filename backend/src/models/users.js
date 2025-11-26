@@ -11,14 +11,17 @@ const users = {
     const dbo = await database.getDbo();
     return await dbo.collection('users').find().toArray();
   },
+
   async getById(id) {
     const dbo = await database.getDbo();
     return await dbo.collection('users').findOne({ _id: toObjectId(id) });
   },
+
   async getByEmail(email) {
     const dbo = await database.getDbo();
     return await dbo.collection('users').findOne({ email });
   },
+
   async create(user) {
     const dbo = await database.getDbo();
 
@@ -28,11 +31,13 @@ const users = {
     const newUser = {
       name: user.name || "Anonymous",
       email: user.email || "",
-      passhash: user.passhash || ""
+      passhash: user.passhash || "",
+      favorite: []
     };
     const result = await dbo.collection('users').insertOne(newUser);
     return await dbo.collection('users').findOne({ _id: result.insertedId });
   },
+
   async update(user) {
     const dbo = await database.getDbo();
     const { _id } = user;
@@ -49,9 +54,31 @@ const users = {
 
     return result;
   },
+
   async delete(id) {
     const dbo = await database.getDbo();
     await dbo.collection('users').deleteOne({ _id: toObjectId(id) });
+  },
+
+  async updateFavorites(user) {
+    const dbo = await database.getDbo();
+    const { _id, favorite, toAdd } = user;
+    if (!_id) throw new Error('Missing _id for update');
+
+    delete user._id;
+    delete user.id;
+
+    const updateQuery = toAdd
+    ? { $addToSet: { favorite: toObjectId(favorite) } }
+    : { $pull: { favorite: toObjectId(favorite) } };
+
+    const result = await dbo.collection('users').findOneAndUpdate(
+      { _id: toObjectId(_id) },
+      updateQuery,
+      { returnDocument: 'after' }
+    );
+
+    return result;
   }
 };
 

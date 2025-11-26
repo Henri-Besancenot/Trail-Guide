@@ -3,12 +3,40 @@ import increase from '../assets/increase2.svg';
 import clock from '../assets/clock.svg';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuthStore } from "../store/authStore"
+
 function TrailPreview({ trail }) {
     const navigate = useNavigate();
+    const user = useAuthStore((state) => state.user);
+    const setUser = useAuthStore((state) => state.setUser);
 
     const handleClick = () => {
         navigate(`/trails/all/${trail._id}`);
     };
+
+    const handleFavorite = async (toAdd) => {
+        try {
+          const response = await fetch(`/api/trails/all`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              _id: user._id,
+              favorite: trail._id,
+              toAdd: toAdd
+            })
+          });
+      
+          const data = await response.json();
+    
+          if (response.ok) {
+            setUser(data.data);
+          } else {
+            console.error(data.message || "Failed to update favorites");
+          }
+        } catch (err) {
+          console.error("Error updating favorites:", err);
+        }
+      };
 
     const {
         title,
@@ -49,23 +77,21 @@ function TrailPreview({ trail }) {
                 </span>
 
                 {/* Favorite Icon */}
-                <div className="cursor-pointer"
-                    onClick={(e) => {
-                        e.stopPropagation(); // Prevent triggering the parent onClick
-                        // Add logic here to toggle favorite state
-                    }}
-                >
+                { user && <div className="cursor-pointer"
+                    onClick={ (e) => {
+                      e.stopPropagation();
+                      const isFavorite = user.favorite.includes(trail._id);
+                      handleFavorite(!isFavorite);}}>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
-                        fill="none" 
+                        fill= {user.favorite.includes(trail._id) ? "currentColor" : "none"} 
                         viewBox="0 0 24 24" 
                         strokeWidth={1.5} 
                         stroke="currentColor" 
-                        className="w-8 h-8 text-yellow-500 hover:fill-yellow-500 transition-colors duration-200"
-                    >
+                        className="w-8 h-8 text-yellow-500 hover:fill-yellow-500 transition-colors duration-200">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.545.044.77.77.326 1.163l-4.304 3.86a.562.562 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.304-3.86a.562.562 0 01.326-1.163l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                     </svg>
-                </div>
+                </div> }
             </div>
 
             {/* Trails quick details */}
