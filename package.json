@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "aws-amplify": "^6.15.8",
     "bootstrap": "^5.3.8",
     "gpxparser": "^3.0.0",
     "leaflet": "^1.9.4",
