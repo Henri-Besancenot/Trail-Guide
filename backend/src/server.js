@@ -42,7 +42,7 @@ app.use('/', require('./routes/router.js'));
 // Handle errors
 app.use((err, req, res, next) => {
     console.error(err);
-    res.status(err.status || 500).json({ error: err.message || "Internal Server Error" });
+    res.status(err.status || 500).json({ status: false, message: err.message || "Internal Server Error" });
   });
 
 // Handle not valid route

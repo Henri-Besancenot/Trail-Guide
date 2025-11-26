@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 const LoginUI = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage]   = useState("");
   const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
@@ -20,7 +21,7 @@ const LoginUI = () => {
     if (response.ok && data.data) {
         login(data.data);
     } else {
-      alert(data.message || "Login failed");
+      setMessage(data.message || "Login failed");
     }
   };
 
@@ -56,6 +57,9 @@ const LoginUI = () => {
       >
         Login
       </button>
+      {message && (
+        <p className="mt-3 text-center text-sm text-red-700">{message}</p>
+      )}
     </form>
   );
 };
