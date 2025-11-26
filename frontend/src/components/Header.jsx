@@ -7,11 +7,11 @@ import {
 } from "@/components/ui/menubar"
 import { Link } from "react-router-dom"
 import logo from "@/assets/logo.png"
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext"
+import { useAuthStore } from "../store/authStore"
 
 function Header() {
-  const { user, logout } = useContext(AuthContext);
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
 
   return (
     <header className="w-full bg-[#F3F3EB] backdrop-blur-sm border-b border-gray-200 shadow-sm">

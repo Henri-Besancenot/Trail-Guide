@@ -20,10 +20,12 @@ const SignUpUI = () => {
         })
       });
 
+      const data = await response.json();
+
       if (response.ok) {
         setMessage("Account successfully created!");
       } else {
-        setMessage(response.statusText || "Error creating account");
+        setMessage(data.message || "Error creating account");
       }
 
     } catch (error) {

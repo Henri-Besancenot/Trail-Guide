@@ -3,12 +3,11 @@ import Template from '../components/Template'
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useContext } from 'react';
 
-import { AuthContext } from "../context/AuthContext";
+import { useAuthStore } from "../store/authStore";
 import TrailPreview from '../components/TrailPreview';
 import TrailFilters from '../components/TrailFilters';
 
 function TrailsList() {
-  const { category } = useParams();
   const [searchParams] = useSearchParams();
   const [trails, setTrails] = useState([]);
   const [filters, setFilters] = useState({
@@ -19,7 +18,7 @@ function TrailsList() {
     duration: '',
     elevation_gain: ''
   });
-  const { user } = useContext(AuthContext);
+  const user = useAuthStore((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {

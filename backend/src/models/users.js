@@ -46,7 +46,8 @@ const users = {
       { $set: user },
       { returnDocument: 'after' }
     );
-    return result.value;
+
+    return result;
   },
   async delete(id) {
     const dbo = await database.getDbo();

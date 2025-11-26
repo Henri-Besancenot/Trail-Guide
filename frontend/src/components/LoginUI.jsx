@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useState } from "react";
+import { useAuthStore } from "../store/authStore";
 
 const LoginUI = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage]   = useState("");
-  const { login } = useContext(AuthContext);
+  const login = useAuthStore(state => state.login);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

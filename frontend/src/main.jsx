@@ -12,27 +12,24 @@ import SignUp from './pages/SignUp.jsx';
 import MyProfile from './pages/MyProfile.jsx';
 import CreateTrail from './pages/CreateTrail.jsx';
 import NearbyTrails from './pages/NearbyTrails.jsx';
-import { AuthProvider } from './context/AuthContext.jsx';
 
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/trails/all" element={<TrailsList />} />
-          <Route path="/trails/all/:id" element={<Trail />} />
-          <Route path="/trails/nearby" element={<NearbyTrails />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/users/:id" element={<MyProfile />} />
-          <Route path="/trails/new" element={<CreateTrail />} />
-        </Routes>
-      </AuthProvider>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/trails/all" element={<TrailsList />} />
+        <Route path="/trails/all/:id" element={<Trail />} />
+        <Route path="/trails/nearby" element={<NearbyTrails />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/users/:id" element={<MyProfile />} />
+        <Route path="/trails/new" element={<CreateTrail />} />
+      </Routes>
     </BrowserRouter>
   </StrictMode>,
 )

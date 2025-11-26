@@ -1,10 +1,45 @@
-import Template from '../components/Template'
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext"
+import { useState } from "react";
 import Carousel from '@/components/Carousel';
 
+import { useAuthStore } from "../store/authStore"
+import Template from '../components/Template'
+
 function MyProfile() {
-  const { user } = useContext(AuthContext);
+  const user = useAuthStore((state) => state.user);
+  const setUser = useAuthStore((state) => state.setUser);
+  const [editing, setEditing] = useState(false);
+  const [tempUsername, setTempUsername] = useState(user? user.name : "");
+  const [tempEmail, setTempEmail] = useState(user? user.email : "");
+  const [message, setMessage] = useState("");
+
+  const handleSave = async (e) => {
+    const response = await fetch(`/api/users/${user._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        _id: user._id,
+        name: tempUsername,
+        email: tempEmail
+      })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setEditing(false);
+      setMessage("");
+      setUser(data.data);
+    } else {
+      setMessage(data.message || "Error updating user");
+    }
+  };
+
+  const handleDiscard = () => {
+    setTempUsername(user.name);
+    setTempEmail(user.email);
+    setEditing(false);
+    setMessage("");
+  };
 
   return (
     <Template bannerTitle={""} bannerSubtitle="Member of Trail Guide">
@@ -21,7 +56,7 @@ function MyProfile() {
                   Personal details and application.
                 </p>
               </div>
-              <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+              <button onClick={() => setEditing(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
                 Edit Profile
               </button>
             </div>
@@ -31,20 +66,47 @@ function MyProfile() {
                   <dt className="text-sm font-medium text-gray-500">
                     Full name
                   </dt>
+                  {!editing ? (
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     {user?.name || "Guest User"}
                   </dd>
+                  ) : (
+                    <input
+                      type="text"
+                      value={tempUsername}
+                      onChange={(e) => setTempUsername(e.target.value)}
+                      className="w-full border rounded px-3 py-2"
+                    />
+                  )}
                 </div>
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">
                     Email address
                   </dt>
+                  {!editing ? (
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     {user?.email || "guest@example.com"}
                   </dd>
+                  ) : (
+                    <input
+                      type="email"
+                      value={tempEmail}
+                      onChange={(e) => setTempEmail(e.target.value)}
+                      className="w-full border rounded px-3 py-2"
+                    />
+                  )}
                 </div>
+                {editing? (<div className="flex justify-end gap-2">
+                    <button onClick={handleDiscard} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+                      Discard
+                    </button>
+                    <button onClick={handleSave} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                      Save
+                    </button>
+                  </div>) : (null)}
               </dl>
             </div>
+            {message && <p className="mt-3 text-center text-sm text-red-700">{message}</p>}
           </div>
 
           {/* Section about the hike that the user has completed or is interested in */}

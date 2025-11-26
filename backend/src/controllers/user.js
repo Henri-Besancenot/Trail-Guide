@@ -38,10 +38,17 @@ module.exports = {
   },
 
   async updateUser(req, res) {
-    if (!has(req.body, ['_id']))
-      throw { status: status.BAD_REQUEST, message: 'You must specify the _id' };
+    if (!has(req.body, ['_id', 'name', 'email']))
+      throw { status: status.BAD_REQUEST, message: 'You must specify all the information' };
     
+    const { _id, email } = req.body;
+    const existingUser = await userModel.getByEmail(email);
+    if (existingUser && existingUser._id.toString() !== _id) {
+      throw { status: status.BAD_REQUEST, message: 'Email already used by another user' };
+    }
+
     const updatedUser = await userModel.update(req.body);
+    console.log("updated user :", updatedUser)
     res.json({ status: true, message: 'User updated', data: updatedUser });
   },
 
