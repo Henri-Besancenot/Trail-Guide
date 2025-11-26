@@ -20,6 +20,7 @@ const LoginUI = () => {
   
     if (response.ok && data.data) {
         login(data.data);
+        window.location.href = "/";
     } else {
       setMessage(data.message || "Login failed");
     }

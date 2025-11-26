@@ -46,6 +46,11 @@ function Header() {
                 <MenubarItem onClick={() => console.log('Navigate to Nearby Trails')}>
                   <Link to="/trails/nearby">Nearby Trails</Link>
                 </MenubarItem>
+                {user && (
+                  <MenubarItem onClick={() => console.log('Create New Trail')}>
+                    <Link to="/trails/new">Create New Trail</Link>
+                  </MenubarItem>
+                )}
               </MenubarContent>
             </MenubarMenu>
 
