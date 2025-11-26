@@ -16,12 +16,13 @@ function TrailPreview({ trail }) {
 
     const handleFavorite = async (toAdd) => {
         try {
-          const response = await fetch(`/api/trails/all`, {
+          const response = await fetch('/api/users/trailsSet', {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               _id: user._id,
-              favorite: trail._id,
+              set: 'favorite',
+              trail: trail._id,
               toAdd: toAdd
             })
           });

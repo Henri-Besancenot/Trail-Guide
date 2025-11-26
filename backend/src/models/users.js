@@ -32,7 +32,8 @@ const users = {
       name: user.name || "Anonymous",
       email: user.email || "",
       passhash: user.passhash || "",
-      favorite: []
+      favorite: [],
+      created: []
     };
     const result = await dbo.collection('users').insertOne(newUser);
     return await dbo.collection('users').findOne({ _id: result.insertedId });
@@ -60,17 +61,17 @@ const users = {
     await dbo.collection('users').deleteOne({ _id: toObjectId(id) });
   },
 
-  async updateFavorites(user) {
+  async updateTrailsSet(user) {
     const dbo = await database.getDbo();
-    const { _id, favorite, toAdd } = user;
+    const { _id, trail, set, toAdd } = user;
     if (!_id) throw new Error('Missing _id for update');
 
     delete user._id;
     delete user.id;
 
     const updateQuery = toAdd
-    ? { $addToSet: { favorite: toObjectId(favorite) } }
-    : { $pull: { favorite: toObjectId(favorite) } };
+    ? { $addToSet: { [set]: toObjectId(trail) } }
+    : { $pull: { [set]: toObjectId(trail) } };
 
     const result = await dbo.collection('users').findOneAndUpdate(
       { _id: toObjectId(_id) },

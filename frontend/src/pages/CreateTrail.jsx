@@ -1,5 +1,7 @@
 import { useState } from "react";
+
 import Template from '../components/Template'
+import { useAuthStore } from "../store/authStore"
 
 const CreateTrail = () => {
   const [title, setTitle] = useState("");
@@ -11,6 +13,8 @@ const CreateTrail = () => {
   const [images, setImages] = useState("");
   const [gpxFile, setGpxFile] = useState("");
   const [message, setMessage] = useState("");
+  const user = useAuthStore((state) => state.user);
+  const setUser = useAuthStore((state) => state.setUser);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +26,7 @@ const CreateTrail = () => {
         body: JSON.stringify({
           title,
           description,
+          user: user,
           distance: Number(distance),
           elevation_gain: Number(elevationGain),
           difficulty,
@@ -45,6 +50,25 @@ const CreateTrail = () => {
         setGpxFile("");
       } else {
         setMessage(data.message || "Error creating trail");
+      }
+ 
+      const response2 = await fetch('/api/users/trailsSet', {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          _id: user._id,
+          trail: data.data._id,
+          set: 'created',
+          toAdd: true
+        })
+      });
+  
+      const data2 = await response2.json();
+
+      if (response2.ok) {
+        setUser(data2.data);
+      } else {
+        console.error(data2.message || "Failed to update created trails");
       }
 
     } catch (error) {

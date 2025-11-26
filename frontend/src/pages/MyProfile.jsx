@@ -132,7 +132,7 @@ function MyProfile() {
 
 
           {/* Section about the hikes that the user created */}
-          <Carousel title="Created Hikes" hikeIds= {user.favorite} addButton={true} />
+          <Carousel title="Created Hikes" hikeIds= {user.created} addButton={true} />
           
           <button onClick={handleDelete} className="block mx-auto mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
               Delete Profile

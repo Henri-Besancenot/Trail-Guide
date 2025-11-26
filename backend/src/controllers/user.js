@@ -80,11 +80,11 @@ module.exports = {
     res.json({ status: true, message: 'Login successful', data: user });
   },
 
-  async updateUserFavorites(req, res) {
-    if (!has(req.body, ['_id', 'favorite', 'toAdd']))
+  async updateTrailsSet(req, res) {
+    if (!has(req.body, ['_id', 'trail', 'set', 'toAdd']))
       throw { status: status.BAD_REQUEST, message: 'Miss some information' };
 
-    const updatedUser = await userModel.updateFavorites(req.body);
-    res.json({ status: true, message: 'Favorites updated', data: updatedUser });
+    const updatedUser = await userModel.updateTrailsSet(req.body);
+    res.json({ status: true, message: 'Set updated', data: updatedUser });
   }
 };
