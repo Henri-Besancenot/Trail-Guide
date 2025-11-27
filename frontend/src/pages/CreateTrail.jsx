@@ -141,10 +141,10 @@ const CreateTrail = () => {
                 onChange={(e) => setDifficulty(e.target.value)}
                 className="w-full border px-2 py-1 rounded"
                 >
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-                <option value="expert">Expert</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+                <option value="Expert">Expert</option>
                 </select>
             </div>
 
