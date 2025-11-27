@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ModalImage from "react-modal-image";
 
@@ -6,11 +6,6 @@ import Template from '../components/Template';
 import GPXMap from '../components/GPXMap';
 import { useAuthStore } from "../store/authStore"
 
-// Leaflet for maps
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-
-// Import assets
 import hiking from '../assets/hiking.png';
 import increase from '../assets/increase2.svg';
 import clock from '../assets/clock.svg';
@@ -18,8 +13,6 @@ import clock from '../assets/clock.svg';
 function Trail() {
   const { id } = useParams();
   const [trail, setTrail] = useState(null);
-  const mapRef = useRef(null);
-  const mapInstance = useRef(null);
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
 
@@ -73,25 +66,6 @@ function Trail() {
   
     fetchTrail();
   }, [id]);  
-
-  // Initialize map when trail data is loaded
-  useEffect(() => {
-    if (!trail) return;
-    if (!mapRef.current) return;
-    if (mapInstance.current) return; // prevent double init
-
-    const lat = trail.latitude || 46.5;   // default values
-    const lng = trail.longitude || 2.6;
-
-    mapInstance.current = L.map(mapRef.current).setView([lat, lng], 13);
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 18,
-      attribution: "&copy; OpenStreetMap contributors"
-    }).addTo(mapInstance.current);
-
-    L.marker([lat, lng]).addTo(mapInstance.current);
-  }, [trail]);
 
   if (!trail) return <p className="text-center mt-10">Loading trail...</p>;
 

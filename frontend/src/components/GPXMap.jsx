@@ -17,7 +17,6 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const GPXMap = ({ gpxUrl }) => {
-    gpxUrl = "https://mpetazzoni.github.io/leaflet-gpx/demo.gpx"
     const mapRef = useRef(null);
     const mapInstanceRef = useRef(null);
     const gpxLayerRef = useRef(null);
