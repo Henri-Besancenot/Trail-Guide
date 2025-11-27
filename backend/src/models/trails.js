@@ -30,7 +30,8 @@ const trails = {
             difficulty: trail.difficulty || "Easy",
             duration: trail.duration || 0,
             images: Array.isArray(trail.images) ? trail.images : [],
-            gpx_file: trail.gpx_file || ""
+            gpx_file: trail.gpx_file || "",
+            start_coords: trail.start_coords || [0, 0]
         };
         const result = await dbo.collection('trails').insertOne(newTrail);
         return await dbo.collection('trails').findOne({ _id: result.insertedId });
