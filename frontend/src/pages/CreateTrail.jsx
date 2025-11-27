@@ -11,49 +11,53 @@ const CreateTrail = () => {
   const [difficulty, setDifficulty] = useState("easy");
   const [duration, setDuration] = useState("");
   const [images, setImages] = useState("");
-  const [gpxFile, setGpxFile] = useState("");
+  const [gpxFile, setGpxFile] = useState(null);
   const [message, setMessage] = useState("");
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      // Create the trail
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("user", user._id);
+      formData.append("distance", distance);
+      formData.append("elevation_gain", elevationGain);
+      formData.append("difficulty", difficulty);
+      formData.append("duration", duration);
+      formData.append("images", JSON.stringify(images.split(",").map(img => img.trim())));
+  
+      if (gpxFile) {
+        formData.append("gpx_file", gpxFile);
+      }
+  
+      // Create trail
       const response = await fetch("/api/trails/all", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title,
-          description,
-          user: user,
-          distance: Number(distance),
-          elevation_gain: Number(elevationGain),
-          difficulty,
-          duration: Number(duration),
-          images: images.split(",").map(img => img.trim()),
-          gpx_file: gpxFile
-        })
+        body: formData
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
         setMessage("Trail successfully created!");
         setTitle("");
         setDescription("");
         setDistance("");
         setElevationGain("");
-        setDifficulty("Easy");
+        setDifficulty("easy");
         setDuration("");
         setImages("");
-        setGpxFile("");
+        setGpxFile(null);
       } else {
         setMessage(data.message || "Error creating trail");
+        return;
       }
- 
-      // Add the trail into the created ones
+  
+      // Add trail into created set
       const updatedUser = await fetch('/api/users/trailsSet', {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -66,18 +70,18 @@ const CreateTrail = () => {
       });
   
       const updatedUserData = await updatedUser.json();
-
       if (updatedUser.ok) {
         setUser(updatedUserData.data);
       } else {
         console.error(updatedUserData.message || "Failed to update created trails");
       }
-
+  
     } catch (error) {
       console.error(error);
       setMessage("Server error");
     }
   };
+  
 
   return (
     <Template bannerTitle="New Trail" bannerSubtitle="Create your own trail">
@@ -166,11 +170,11 @@ const CreateTrail = () => {
             </div>
 
             <div className="mb-3">
-                <label className="block mb-1">GPX File URL</label>
+                <label className="block mb-1">GPX File</label>
                 <input
-                type="text"
-                value={gpxFile}
-                onChange={(e) => setGpxFile(e.target.value)}
+                type="file"
+                accept=".gpx"
+                onChange={(e) => setGpxFile(e.target.files[0])}
                 className="w-full border px-2 py-1 rounded"
                 />
             </div>

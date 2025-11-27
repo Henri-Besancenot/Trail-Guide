@@ -90,7 +90,7 @@ function Trail() {
         });
   
         const data = await response.json();
-  
+
         if (!response.ok) {
           console.error(data.message || "Error while fetching trail");
           return;
@@ -110,7 +110,6 @@ function Trail() {
   if (!trail) return <p className="text-center mt-10">Loading trail...</p>;
 
   const { title, difficulty, distance, duration, elevation_gain, description, images, gpx_file } = trail;
-  console.log("GPX File URL:", gpx_file);
   return (
     <Template bannerTitle={title} bannerSubtitle={`Difficulty: ${difficulty}`}>
       <div className="w-full px-4 py-6">

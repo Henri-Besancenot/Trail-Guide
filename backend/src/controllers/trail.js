@@ -27,16 +27,15 @@ export async function getTrails(req, res) {
 }
 
 export async function createTrail(req, res) {
-  if (!hasKeys(req.body, ["title", "description", "user", "distance", "elevation_gain", "difficulty", "duration", "images", "gpx_file"]))
-    throw { status: status.BAD_REQUEST, message: "You must specify all the informations needed" };
-
-  const { title, description, user, distance, elevation_gain, difficulty, duration, images, gpx_file } = req.body;
-  const response = await fetch(gpx_file);
-  if (!response.ok) {
-    throw { status: status.BAD_REQUEST, message: "Impossible de télécharger le fichier GPX" };
+  const required = ["title", "description", "user", "distance", "elevation_gain", "difficulty", "duration", "images"];
+  if (!required.every(k => k in req.body))
+    throw { status: status.BAD_REQUEST, message: "Missing required fields" };
+  
+  if (!req.file) {
+    throw { status: status.BAD_REQUEST, message: "You must upload a GPX file" };
   }
 
-  const gpxText = await response.text();
+  const gpxText = req.file.buffer.toString("utf-8");
   const gpxData = await new Promise((resolve, reject) => {
     gpxParse.parseGpx(gpxText, (err, data) => {
       if (err) reject(err);
@@ -48,7 +47,7 @@ export async function createTrail(req, res) {
   const firstPoint = track?.segments?.[0]?.[0];
   const start_coords = firstPoint ? [firstPoint.lat, firstPoint.lon] : null;
 
-  const newTrail = await trailModel.create({ title, description, user, distance, elevation_gain, difficulty, duration, images, gpx_file, start_coords });
+  const newTrail = await trailModel.create({...req.body, gpx_file: gpxText, start_coords });
   res.json({ status: true, message: "Trail added", data: newTrail });
 }
 

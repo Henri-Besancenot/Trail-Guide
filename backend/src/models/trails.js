@@ -22,16 +22,18 @@ export async function create(trail) {
   delete trail._id;
   delete trail.id;
 
+  const creator = await dbo.collection("users").findOne({ _id: toObjectId(trail.user) })
+
   const newTrail = {
     title: trail.title || "Untitled Trail",
     description: trail.description || "",
-    user: trail.user,
+    user: creator,
     distance: trail.distance || 0,
     elevation_gain: trail.elevation_gain || 0,
     difficulty: trail.difficulty || "Easy",
     duration: trail.duration || 0,
     images: Array.isArray(trail.images) ? trail.images : [],
-    gpx_file: trail.gpx_file || "",
+    gpx_file: trail.gpx_file || null,
     start_coords: trail.start_coords || [0, 0],
   };
 
