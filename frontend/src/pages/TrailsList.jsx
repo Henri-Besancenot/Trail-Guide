@@ -87,7 +87,7 @@ function TrailsList() {
 
         <div className="mt-8 space-y-8">
             {trails.length === 0 ? (
-              <p>Loading trails...</p>
+              <p></p>
             ) : (
               trails.map((trail) => (
                 <TrailPreview key={trail._id} trail={trail} />
