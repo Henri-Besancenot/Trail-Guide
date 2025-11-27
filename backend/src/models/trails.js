@@ -32,6 +32,7 @@ export async function create(trail) {
     elevation_gain: trail.elevation_gain || 0,
     difficulty: trail.difficulty || "Easy",
     duration: trail.duration || 0,
+    favorite: 0,
     images: Array.isArray(trail.images) ? trail.images : [],
     gpx_file: trail.gpx_file || null,
     start_coords: trail.start_coords || [0, 0],
@@ -97,6 +98,9 @@ export async function search(filters) {
   let cursor = dbo.collection("trails").find(query);
 
   switch (filters.sort) {
+    case 'o_popularity':
+      cursor = cursor.sort({ favorite: -1 });
+      break;
     case 'o_diff':
       return dbo.collection("trails").aggregate([
         { $match: query },

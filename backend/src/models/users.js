@@ -73,5 +73,13 @@ export async function updateTrailsSet({ _id, trail, set, toAdd }) {
     updateQuery,
     { returnDocument: "after" }
   );
+
+  if (set === "favorite") {
+    await dbo.collection("trails").updateOne(
+      { _id: toObjectId(trail) },
+      { $inc: { favorite: toAdd ? 1 : -1 } }
+    );
+  }
+  
   return result;
 }
