@@ -116,31 +116,31 @@ function Trail() {
         <div className="bg-[#E4DEDE] w-full min-h-64 p-6 rounded-xl">
 
           <div className="grid grid-cols-3">
-            {/* Your existing details… */}
+          {/* /* Your existing details… */}
             <div className= "col-span-2 pr-6">
               <div className="flex items-center mb-4">
-                <h2 className="text-2xl font-bold mb-1">{title}</h2>
-                { user && 
-                <div className="cursor-pointer" onClick={ () => { handleFavorite(!user.favorite.includes(trail._id));}}>
-                    <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        fill= {user.favorite.includes(trail._id) ? "currentColor" : "none"} 
-                        viewBox="0 0 24 24" 
-                        strokeWidth={1.5} 
-                        stroke="currentColor" 
-                        className="w-8 h-8 text-yellow-500 hover:fill-yellow-500 transition-colors duration-200">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.545.044.77.77.326 1.163l-4.304 3.86a.562.562 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.304-3.86a.562.562 0 01.326-1.163l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                    </svg>
-                </div> }
-                {user && user?.created?.includes(trail._id) && <button onClick={handleDelete} className="block mx-auto mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                    Delete Trail
-                </button>}
-                </div>
-                <h2 className="text-gray-500 italic text-mg mt-0 mb-4">Trail uploaded by {trail.user.name}</h2>
+              <h2 className="text-2xl font-bold">{title}</h2>
+              { user && 
+              <div className="cursor-pointer" onClick={ () => { handleFavorite(!user.favorite.includes(trail._id));}}>
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  fill= {user.favorite.includes(trail._id) ? "currentColor" : "none"} 
+                  viewBox="0 0 24 24" 
+                  strokeWidth={1.5} 
+                  stroke="currentColor" 
+                  className="w-8 h-8 ml-2  text-yellow-500 hover:fill-yellow-500 transition-colors duration-200">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.545.044.77.77.326 1.163l-4.304 3.86a.562.562 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.304-3.86a.562.562 0 01.326-1.163l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                </svg>
+              </div> }
+              {user && user?.created?.includes(trail._id) && <button onClick={handleDelete} className="block mx-auto mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Delete Trail
+              </button>}
+              </div>
+              <h2 className="text-gray-500 italic text-mg mt-0 mb-4">Trail uploaded by {trail.user.name}</h2>
               
               <p className="text-gray-700 mb-4 text-lg py-2">{description}</p>
 
-              {/* Information and data */}
+                  {/* Information and data */}
               <div className="bg-[#ECEDE0] w-full min-h-10 rounded-xl mx-auto">
                 <h3 className="text-xl font-semibold mb-4 mt-4 py-2 px-4">Details</h3>
                 <div className= "grid grid-cols-2 gap-4 px-4 pb-4">

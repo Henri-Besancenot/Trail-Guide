@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/menubar"
 import { Link } from "react-router-dom"
 import logo from "@/assets/logo.png"
+import defaultProfilePic from "@/assets/defaultprofilpicture.png"
 import { useAuthStore } from "../store/authStore"
 
 function Header() {
@@ -85,14 +86,14 @@ function Header() {
               
             ) : (
               <MenubarMenu>
-                <MenubarTrigger className="cursor-pointer hover:bg-gray-100 data-[state=open]:bg-gray-100">
-                  <div className="items-center space-x-2 wrap-inline-flex">
+                <MenubarTrigger className="cursor-pointer hover:bg-gray-100 data-[state=open]:bg-gray-100 h-auto py-1">
+                  <div className="flex flex-col items-center justify-center space-y-1">
                     <img 
-                      src={user.image ? user.image : "/src/assets/defaultprofilpicture.png"} 
-                      alt="Profile" 
+                      src={user.image ? user.image : defaultProfilePic} 
+                      alt="Profile"
                       className="h-8 w-8 rounded-full object-cover" 
                     />
-                    {user.name}
+                    <span className="text-xs">{user.name}</span>
                   </div>
                 </MenubarTrigger>
                 <MenubarContent className="bg-white">
