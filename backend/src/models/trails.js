@@ -87,5 +87,40 @@ export async function search(filters) {
     query.difficulty = { $regex: `^${filters.difficulty}$`, $options: "i" };
   }
 
-  return dbo.collection("trails").find(query).toArray();
+  let cursor = dbo.collection("trails").find(query);
+
+  switch (filters.sort) {
+    case 'o_diff':
+      return dbo.collection("trails").aggregate([
+        { $match: query },
+        {
+          $addFields: {
+            difficultyOrder: {
+              $switch: {
+                branches: [
+                  { case: { $eq: [{ $toLower: "$difficulty" }, "easy"] }, then: 1 },
+                  { case: { $eq: [{ $toLower: "$difficulty" }, "medium"] }, then: 2 },
+                  { case: { $eq: [{ $toLower: "$difficulty" }, "hard"] }, then: 3 },
+                  { case: { $eq: [{ $toLower: "$difficulty" }, "expert"] }, then: 4 },
+                ],
+                default: 999
+              }
+            }
+          }
+        },
+        { $sort: { difficultyOrder: 1 } }
+      ]).toArray();
+    case 'o_dist':
+      cursor = cursor.sort({ distance: 1 });
+      break;
+    case 'o_elevation_gain':
+      cursor = cursor.sort({ elevation_gain: 1 });
+      break;
+    case 'o_duration':
+    default:
+      cursor = cursor.sort({ duration: 1 });
+      break;
+  }
+
+  return cursor.toArray();
 }

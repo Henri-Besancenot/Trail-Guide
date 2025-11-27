@@ -16,7 +16,8 @@ function TrailsList() {
     minDistance: '',
     maxDistance: '',
     duration: '',
-    elevation_gain: ''
+    elevation_gain: '',
+    sort: 'o_duration'
   });
   const user = useAuthStore((state) => state.user);
   const navigate = useNavigate();
