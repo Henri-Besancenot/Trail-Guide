@@ -59,7 +59,12 @@ export async function update(trail) {
 
 export async function deleteTrail(id) {
   const dbo = await getDbo();
-  await dbo.collection("trails").deleteOne({ _id: toObjectId(id) });
+  const trailId = toObjectId(id);
+  const trail = await dbo.collection("trails").findOne({ _id: trailId });
+  if (!trail) throw new Error("Trail not found");
+
+  await dbo.collection("users").updateMany({ favorite: trailId }, { $pull: { favorite: trailId } });
+  await dbo.collection("trails").deleteOne({ _id: trailId });
 }
 
 export async function search(filters) {

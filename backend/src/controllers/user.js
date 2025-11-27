@@ -8,7 +8,7 @@ function hasKeys(obj, keys) {
 }
 
 export async function getUserById(req, res) {
-  if (!hasKeys(req.params, "id"))
+  if (!hasKeys(req.params, ["id"]))
     throw { status: status.BAD_REQUEST, message: "You must specify the id" };
 
   const { id } = req.params;
@@ -55,7 +55,7 @@ export async function updateUser(req, res) {
 }
 
 export async function deleteUser(req, res) {
-  if (!hasKeys(req.params, "id"))
+  if (!hasKeys(req.params, ["id"]))
     throw { status: status.BAD_REQUEST, message: "You must specify the id" };
 
   const { id } = req.params;
