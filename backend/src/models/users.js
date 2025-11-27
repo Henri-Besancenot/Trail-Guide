@@ -1,58 +1,85 @@
-const { ObjectId } = require('mongodb');
-const database = require('./database.js');
+import { ObjectId } from "mongodb";
+import { getDbo } from "./database.js";
 
 function toObjectId(id) {
-  if (!id) throw new Error('Invalid ID');
-  return typeof id === 'string' ? new ObjectId(id) : id;
+  if (!id) throw new Error("Invalid ID");
+  return typeof id === "string" ? new ObjectId(id) : id;
 }
 
-const users = {
-  async getAll() {
-    const dbo = await database.getDbo();
-    return await dbo.collection('users').find().toArray();
-  },
-  async getById(id) {
-    const dbo = await database.getDbo();
-    return await dbo.collection('users').findOne({ _id: toObjectId(id) });
-  },
-  async getByEmail(email) {
-    const dbo = await database.getDbo();
-    return await dbo.collection('users').findOne({ email });
-  },
-  async create(user) {
-    const dbo = await database.getDbo();
+export async function getAll() {
+  const dbo = await getDbo();
+  return dbo.collection("users").find().toArray();
+}
 
-    delete user._id;
-    delete user.id;
+export async function getById(id) {
+  const dbo = await getDbo();
+  return dbo.collection("users").findOne({ _id: toObjectId(id) });
+}
 
-    const newUser = {
-      name: user.name || "Anonymous",
-      email: user.email || "",
-      passhash: user.passhash || ""
-    };
-    const result = await dbo.collection('users').insertOne(newUser);
-    return await dbo.collection('users').findOne({ _id: result.insertedId });
-  },
-  async update(user) {
-    const dbo = await database.getDbo();
-    const { _id } = user;
-    if (!_id) throw new Error('Missing _id for update');
+export async function getByEmail(email) {
+  const dbo = await getDbo();
+  return dbo.collection("users").findOne({ email });
+}
 
-    delete user._id;
-    delete user.id;
+export async function create(user) {
+  const dbo = await getDbo();
 
-    const result = await dbo.collection('users').findOneAndUpdate(
-      { _id: toObjectId(_id) },
-      { $set: user },
-      { returnDocument: 'after' }
+  delete user._id;
+  delete user.id;
+
+  const newUser = {
+    name: user.name || "Anonymous",
+    email: user.email || "",
+    passhash: user.passhash || "",
+    favorite: [],
+    created: [],
+  };
+
+  const result = await dbo.collection("users").insertOne(newUser);
+  return dbo.collection("users").findOne({ _id: result.insertedId });
+}
+
+export async function update(user) {
+  const dbo = await getDbo();
+  const { _id } = user;
+  if (!_id) throw new Error("Missing _id for update");
+
+  delete user._id;
+  delete user.id;
+
+  const result = await dbo.collection("users").findOneAndUpdate(
+    { _id: toObjectId(_id) },
+    { $set: user },
+    { returnDocument: "after" }
+  );
+  return result.value;
+}
+
+export async function deleteUser(id) {
+  const dbo = await getDbo();
+  await dbo.collection("users").deleteOne({ _id: toObjectId(id) });
+}
+
+export async function updateTrailsSet({ _id, trail, set, toAdd }) {
+  const dbo = await getDbo();
+  if (!_id) throw new Error("Missing _id for update");
+
+  const updateQuery = toAdd
+    ? { $addToSet: { [set]: toObjectId(trail) } }
+    : { $pull: { [set]: toObjectId(trail) } };
+
+  const result = await dbo.collection("users").findOneAndUpdate(
+    { _id: toObjectId(_id) },
+    updateQuery,
+    { returnDocument: "after" }
+  );
+
+  if (set === "favorite") {
+    await dbo.collection("trails").updateOne(
+      { _id: toObjectId(trail) },
+      { $inc: { favorite: toAdd ? 1 : -1 } }
     );
-
-    return result;
-  },
-  async delete(id) {
-    const dbo = await database.getDbo();
-    await dbo.collection('users').deleteOne({ _id: toObjectId(id) });
   }
-};
-
-module.exports = users;
+  
+  return result;
+}

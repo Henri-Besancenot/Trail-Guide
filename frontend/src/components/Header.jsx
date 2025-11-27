@@ -100,7 +100,7 @@ function Header() {
                   <Link to={`/users/${user._id}`}>My profile</Link>
                   </MenubarItem>
                   <MenubarItem onClick={logout}>
-                    <Link to="/contact">Logout</Link>
+                    <Link to="/login">Logout</Link>
                   </MenubarItem>
                 </MenubarContent>
               </MenubarMenu>

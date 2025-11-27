@@ -12,6 +12,7 @@ import SignUp from './pages/SignUp.jsx';
 import MyProfile from './pages/MyProfile.jsx';
 import CreateTrail from './pages/CreateTrail.jsx';
 import NearbyTrails from './pages/NearbyTrails.jsx';
+import PopularTrails from './pages/PopularTrails.jsx';
 
 import './index.css'
 
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/trails/all" element={<TrailsList />} />
         <Route path="/trails/all/:id" element={<Trail />} />
         <Route path="/trails/nearby" element={<NearbyTrails />} />
+        <Route path="/trails/popular" element={<PopularTrails />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />

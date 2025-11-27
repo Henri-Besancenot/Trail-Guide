@@ -1,14 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import Template from '../components/Template';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import ModalImage from "react-modal-image";
+
+import Template from '../components/Template';
 import GPXMap from '../components/GPXMap';
+import { useAuthStore } from "../store/authStore"
 
-// Leaflet for maps
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-
-// Import assets
 import hiking from '../assets/hiking.png';
 import increase from '../assets/increase2.svg';
 import clock from '../assets/clock.svg';
@@ -16,8 +13,73 @@ import clock from '../assets/clock.svg';
 function Trail() {
   const { id } = useParams();
   const [trail, setTrail] = useState(null);
-  const mapRef = useRef(null);
-  const mapInstance = useRef(null);
+  const user = useAuthStore((state) => state.user);
+  const setUser = useAuthStore((state) => state.setUser);
+  const navigate = useNavigate();
+
+  const handleFavorite = async (toAdd) => {
+    try {
+      const response = await fetch(`/api/users/trailsSet`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          _id: user._id,
+          set: 'favorite',
+          trail: trail._id,
+          toAdd: toAdd
+        })
+      });
+  
+      const data = await response.json();
+
+      if (response.ok) {
+        setUser(data.data);
+      } else {
+        console.error(data.message || "Failed to update favorites");
+      }
+    } catch (err) {
+      console.error("Error updating favorites:", err);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      // Delete the trail from the created one of the user
+      const updatedUser = await fetch(`/api/users/trailsSet`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          _id: user._id,
+          set: 'created',
+          trail: trail._id,
+          toAdd: false
+        })
+      });
+  
+      const updatedUserData = await updatedUser.json();
+
+      if (updatedUser.ok) {
+        setUser(updatedUserData.data);
+      } else {
+        console.error(updatedUserData.message || "Failed to update created trails");
+      }
+
+      // Delete the trail itself
+      const response = await fetch(`/api/trails/all/${trail._id}`, {
+        method: "DELETE"
+      });
+  
+      const data = await response.json();
+
+      if (response.ok) {
+        navigate("/trails/all");
+      } else {
+        console.error(data.message || "Failed to delete trail");
+      }
+    } catch (err) {
+      console.error("Error deleting trail:", err);
+    }
+  };
 
   useEffect(() => {
     const fetchTrail = async () => {
@@ -28,7 +90,7 @@ function Trail() {
         });
   
         const data = await response.json();
-  
+
         if (!response.ok) {
           console.error(data.message || "Error while fetching trail");
           return;
@@ -37,7 +99,6 @@ function Trail() {
         if (data.status && data.data) {
           setTrail(data.data);
         }
-  
       } catch (error) {
         console.error("Server error:", error);
       }
@@ -46,29 +107,9 @@ function Trail() {
     fetchTrail();
   }, [id]);  
 
-  // Initialize map when trail data is loaded
-  useEffect(() => {
-    if (!trail) return;
-    if (!mapRef.current) return;
-    if (mapInstance.current) return; // prevent double init
-
-    const lat = trail.latitude || 46.5;   // default values
-    const lng = trail.longitude || 2.6;
-
-    mapInstance.current = L.map(mapRef.current).setView([lat, lng], 13);
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 18,
-      attribution: "&copy; OpenStreetMap contributors"
-    }).addTo(mapInstance.current);
-
-    L.marker([lat, lng]).addTo(mapInstance.current);
-  }, [trail]);
-
   if (!trail) return <p className="text-center mt-10">Loading trail...</p>;
 
   const { title, difficulty, distance, duration, elevation_gain, description, images, gpx_file } = trail;
-  console.log("GPX File URL:", gpx_file);
   return (
     <Template bannerTitle={title} bannerSubtitle={`Difficulty: ${difficulty}`}>
       <div className="w-full px-4 py-6">
@@ -78,25 +119,24 @@ function Trail() {
             {/* Your existing details… */}
             <div className= "col-span-2 pr-6">
               <div className="flex items-center mb-4">
-                <h2 className="text-2xl font-bold mb-4 py-2">{title}</h2>
-                <div className="cursor-pointer ml-4 mb-4"
-                    onClick={(e) => {
-                        e.stopPropagation(); // Prevent triggering the parent onClick
-                        // Add logic here to toggle favorite state
-                    }}
-                >
+                <h2 className="text-2xl font-bold mb-1">{title}</h2>
+                { user && 
+                <div className="cursor-pointer" onClick={ () => { handleFavorite(!user.favorite.includes(trail._id));}}>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
-                        fill="none" 
+                        fill= {user.favorite.includes(trail._id) ? "currentColor" : "none"} 
                         viewBox="0 0 24 24" 
                         strokeWidth={1.5} 
                         stroke="currentColor" 
-                        className="w-8 h-8 text-yellow-500 hover:fill-yellow-500 transition-colors duration-200"
-                    >
+                        className="w-8 h-8 text-yellow-500 hover:fill-yellow-500 transition-colors duration-200">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.545.044.77.77.326 1.163l-4.304 3.86a.562.562 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.304-3.86a.562.562 0 01.326-1.163l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                     </svg>
+                </div> }
+                {user && user?.created?.includes(trail._id) && <button onClick={handleDelete} className="block mx-auto mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    Delete Trail
+                </button>}
                 </div>
-                </div>
+                <h2 className="text-gray-500 italic text-mg mt-0 mb-4">Trail uploaded by {trail.user.name}</h2>
               
               <p className="text-gray-700 mb-4 text-lg py-2">{description}</p>
 
