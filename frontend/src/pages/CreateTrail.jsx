@@ -20,6 +20,7 @@ const CreateTrail = () => {
     e.preventDefault();
 
     try {
+      // Create the trail
       const response = await fetch("/api/trails/all", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -52,7 +53,8 @@ const CreateTrail = () => {
         setMessage(data.message || "Error creating trail");
       }
  
-      const response2 = await fetch('/api/users/trailsSet', {
+      // Add the trail into the created ones
+      const updatedUser = await fetch('/api/users/trailsSet', {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -63,12 +65,12 @@ const CreateTrail = () => {
         })
       });
   
-      const data2 = await response2.json();
+      const updatedUserData = await updatedUser.json();
 
-      if (response2.ok) {
-        setUser(data2.data);
+      if (updatedUser.ok) {
+        setUser(updatedUserData.data);
       } else {
-        console.error(data2.message || "Failed to update created trails");
+        console.error(updatedUserData.message || "Failed to update created trails");
       }
 
     } catch (error) {

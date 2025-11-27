@@ -40,8 +40,7 @@ function TrailsList() {
   
       try {
         const res = await fetch(`/api/trails/all?${params.toString()}`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
+          method: "GET"
         });
   
         const data = await res.json();

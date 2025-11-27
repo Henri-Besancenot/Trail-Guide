@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ModalImage from "react-modal-image";
 
 import Template from '../components/Template';
@@ -15,10 +15,11 @@ function Trail() {
   const [trail, setTrail] = useState(null);
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
+  const navigate = useNavigate();
 
   const handleFavorite = async (toAdd) => {
     try {
-      const response = await fetch('/api/users/trailsSet', {
+      const response = await fetch(`/api/users/trailsSet`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -38,6 +39,45 @@ function Trail() {
       }
     } catch (err) {
       console.error("Error updating favorites:", err);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      // Delete the trail from the created one of the user
+      const updatedUser = await fetch(`/api/users/trailsSet`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          _id: user._id,
+          set: 'created',
+          trail: trail._id,
+          toAdd: false
+        })
+      });
+  
+      const updatedUserData = await updatedUser.json();
+
+      if (updatedUser.ok) {
+        setUser(updatedUserData.data);
+      } else {
+        console.error(updatedUserData.message || "Failed to update created trails");
+      }
+
+      // Delete the trail itself
+      const response = await fetch(`/api/trails/all/${trail._id}`, {
+        method: "DELETE"
+      });
+  
+      const data = await response.json();
+
+      if (response.ok) {
+        navigate("/trails/all");
+      } else {
+        console.error(data.message || "Failed to delete trail");
+      }
+    } catch (err) {
+      console.error("Error deleting trail:", err);
     }
   };
 
@@ -81,10 +121,8 @@ function Trail() {
             <div className= "col-span-2 pr-6">
               <div className="flex items-center mb-4">
                 <h2 className="text-2xl font-bold mb-1">{title}</h2>
-                { user && <div className="cursor-pointer"
-                    onClick={ () => {
-                      const isFavorite = user.favorite.includes(trail._id);
-                      handleFavorite(!isFavorite);}}>
+                { user && 
+                <div className="cursor-pointer" onClick={ () => { handleFavorite(!user.favorite.includes(trail._id));}}>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         fill= {user.favorite.includes(trail._id) ? "currentColor" : "none"} 
@@ -95,6 +133,9 @@ function Trail() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.545.044.77.77.326 1.163l-4.304 3.86a.562.562 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.304-3.86a.562.562 0 01.326-1.163l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                     </svg>
                 </div> }
+                {user && user?.created?.includes(trail._id) && <button onClick={handleDelete} className="block mx-auto mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    Delete Trail
+                </button>}
                 </div>
                 <h2 className="text-gray-500 italic text-mg mt-0 mb-4">Trail uploaded by {trail.user.name}</h2>
               

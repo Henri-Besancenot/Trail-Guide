@@ -46,11 +46,7 @@ function MyProfile() {
 
   const handleDelete = async () => {
     const response = await fetch(`/api/users/${user._id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        _id: user._id
-      })
+      method: "DELETE"
     });
 
     if (response.ok) {

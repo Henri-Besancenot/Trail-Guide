@@ -73,5 +73,5 @@ export async function updateTrailsSet({ _id, trail, set, toAdd }) {
     updateQuery,
     { returnDocument: "after" }
   );
-  return result.value;
+  return result;
 }
