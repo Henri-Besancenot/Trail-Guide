@@ -74,6 +74,7 @@ function MyProfile() {
                 Edit Profile
               </button>
             </div>
+
             <div className="border-t border-gray-200">
               <dl>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -81,9 +82,9 @@ function MyProfile() {
                     Full name
                   </dt>
                   {!editing ? (
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    {user?.name || "Guest User"}
-                  </dd>
+                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      {user?.name || "Guest User"}
+                    </dd>
                   ) : (
                     <input
                       type="text"
@@ -93,14 +94,15 @@ function MyProfile() {
                     />
                   )}
                 </div>
+
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">
                     Email address
                   </dt>
                   {!editing ? (
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    {user?.email || "guest@example.com"}
-                  </dd>
+                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      {user?.email || "guest@example.com"}
+                    </dd>
                   ) : (
                     <input
                       type="email"
@@ -110,28 +112,59 @@ function MyProfile() {
                     />
                   )}
                 </div>
-                {editing? (<div className="flex justify-end gap-2">
-                    <button onClick={handleDiscard} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
-                      Discard
-                    </button>
-                    <button onClick={handleSave} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-                      Save
-                    </button>
-                  </div>) : (null)}
+
+                {
+                  editing ? (<div>
+                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-500">
+                        Profile Picture
+                      </dt>
+                      <div className="w-full">
+                        <input
+                          type="file"
+                          id="file-upload"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const fileName = e.target.files[0]?.name;
+                            document.getElementById('file-name').textContent = fileName || "Choose a file";
+                          }}
+                        />
+                        <label
+                          htmlFor="file-upload"
+                          className="cursor-pointer inline-block px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                        >
+                          Browse...
+                        </label>
+                        <span id="file-name" className="ml-3 text-sm text-gray-500">Choose a file</span>
+                      </div>
+                    </div>
+                  </div>) : (null)
+                }
+
+                {editing ? (<div className="flex justify-end gap-2 p-4">
+                  <button onClick={handleDiscard} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+                    Discard
+                  </button>
+                  <button onClick={handleSave} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                    Save
+                  </button>
+                </div>) : (null)}
               </dl>
             </div>
             {message && <p className="mt-3 text-center text-sm text-red-700">{message}</p>}
           </div>
 
+
           {/* Section about the hike that the user has completed or is interested in */}
-          <Carousel title="Favorite Hikes" hikeIds= {user.favorite} />
+          <Carousel title="Favorite Hikes" hikeIds={user.favorite} />
 
 
           {/* Section about the hikes that the user created */}
-          <Carousel title="Created Hikes" hikeIds= {user.created} addButton={true} />
-          
+          <Carousel title="Created Hikes" hikeIds={user.created} addButton={true} />
+
           <button onClick={handleDelete} className="block mx-auto mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-              Delete Profile
+            Delete Profile
           </button>
         </div>
       </div>
