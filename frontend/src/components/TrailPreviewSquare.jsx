@@ -28,16 +28,20 @@ const TrailPreviewSquare = ({ trailId }) => {
     if (!trail) return <p className="text-center mt-10">Loading trail...</p>;
     
     return (
-        <div className="flex-none w-64 bg-white rounded-lg shadow-md overflow-hidden border border-stone-200 hover:shadow-lg transition-shadow duration-300">
-            <div className="h-32 bg-stone-300 w-full object-cover"></div>
-            <div className="p-4">
-                <h3 className="text-lg font-semibold text-stone-800">{trail.title}</h3>
-                <p className="text-sm text-stone-600 mt-1">{trail.distance} • {trail.difficulty}</p>
-                <Link to={`/trails/all/${trailId}`} className="mt-3 block text-emerald-600 hover:text-emerald-800 text-sm font-medium">
-                    View Details &rarr;
-                </Link>
-            </div>
+      <div className="flex-none w-64 bg-white rounded-lg shadow-md overflow-hidden border border-stone-200 hover:shadow-lg transition-shadow duration-300">
+        <img 
+          src={trail.images.length > 0 ? trail.images[0] : 'https://via.placeholder.com/256x128?text=No+Image'} 
+          alt={trail.title} 
+          className="h-32 w-full object-cover"
+        />
+        <div className="p-4">
+          <h3 className="text-lg font-semibold text-stone-800">{trail.title}</h3>
+          <p className="text-sm text-stone-600 mt-1">{trail.distance} • {trail.difficulty}</p>
+          <Link to={`/trails/all/${trailId}`} className="mt-3 block text-emerald-600 hover:text-emerald-800 text-sm font-medium">
+            View Details &rarr;
+          </Link>
         </div>
+      </div>
     );
 };
 
