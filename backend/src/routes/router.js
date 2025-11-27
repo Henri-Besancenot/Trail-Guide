@@ -1,5 +1,10 @@
-const router = require('express').Router();
-router.use(require('./user'));
-router.use(require('./trail'));
+import { Router } from "express";
+import userRoutes from "./user.js";
+import trailRoutes from "./trail.js";
 
-module.exports = router;
+const router = Router();
+
+router.use(userRoutes);
+router.use(trailRoutes);
+
+export default router;

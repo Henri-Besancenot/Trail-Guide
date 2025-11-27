@@ -1,20 +1,14 @@
-// Require Dependencies
+import express from "express";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import helmet from "helmet";
 
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-const helmet = require('helmet');
+import logger from "./util/logger.js";
+import router from "./routes/router.js";
 
-const logger = require('./util/logger');
+import 'dotenv/config';
 
-// Load .env Enviroment Variables to process.env
-require('mandatoryenv').load([
-    'DB_URL',
-    'PORT',
-    'SECRET'
-]);
-
-const { PORT } = process.env;
+const PORT = process.env.PORT || 3000;
 
 // Instantiate an Express Application
 const app = express();
@@ -37,7 +31,7 @@ app.use('*', (req, res, next) => {
 })
 
 // Assign Routes
-app.use('/', require('./routes/router.js'));
+app.use('/', router);
 
 // Handle errors
 app.use((err, req, res, next) => {

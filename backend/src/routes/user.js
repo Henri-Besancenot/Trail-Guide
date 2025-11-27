@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const user = require('../controllers/user.js');
+import express from "express";
+import * as user from "../controllers/user.js";
 
+const router = express.Router();
 const asyncWrap = fn => (req, res, next) =>
     Promise.resolve(fn(req, res, next)).catch(next);
 
@@ -13,4 +13,4 @@ router.put('/api/users/trailsSet', asyncWrap(user.updateTrailsSet));
 router.put('/api/users/:id', asyncWrap(user.updateUser));
 router.delete('/api/users/:id', asyncWrap(user.deleteUser));
 
-module.exports = router;
+export default router;
