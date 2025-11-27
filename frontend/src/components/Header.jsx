@@ -72,7 +72,7 @@ function Header() {
             {!user ? (
               <MenubarMenu>
                 <MenubarTrigger className="cursor-pointer hover:bg-gray-100 data-[state=open]:bg-gray-100">
-                  <img src="/src/assets/defaultprofilpicture.png" alt="Login" className="h-8 w-8 rounded-full" />
+                  <img src={defaultProfilePic} alt="Login" className="h-8 w-8 rounded-full" />
                 </MenubarTrigger>
                 <MenubarContent className="bg-white">
                   <MenubarItem onClick={() => console.log('Navigate to Login')}>

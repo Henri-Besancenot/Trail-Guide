@@ -90,13 +90,13 @@ That basically do those steps:
 - [x] Choose frontend framework (React.js with Vite)
 - [x] Set up Tailwind CSS for styling
 - [x] Implement basic frontend layout and navigation
-- [ ] Integrate Google Maps API and GPX track display
-- [ ] Implement trail browsing and filtering features
-- [ ] Add trail detail pages with descriptions, photos, and maps
+- [X] Integrate Google Maps API and GPX track display
+- [X] Implement trail browsing and filtering features
+- [X] Add trail detail pages with descriptions, photos, and maps
 
 ### Backend
 - [x] Set up backend with Node.js (JavaScript/TypeScript)
-- [ ] Design and create MongoDB database schema
+- [X] Design and create MongoDB database schema
 - [ ] Enable trail editing functionality for users
-- [ ] Populate database with sample trail data
+- [X] Populate database with sample trail data
 - [ ] Implement trail generation feature based on user-provided information (estimated difficulty, time, points of interest, etc.)
