@@ -101,7 +101,7 @@ function TrailPreview({ trail }) {
                 <div className="px-6 mt-2 grid grid-cols-2 gap-x-2 gap-y-3 mt-8 items-start justify-items-start w-2xs h-20 mx-auto">
                     <div className="flex items-center">
                         <img src={hiking} alt="distance" className="w-10 h-10 bg-white p-2 rounded-full" />
-                        <p className="text-sm text-gray-600 ml-2"> {distance/1000}km</p>
+                        <p className="text-sm text-gray-600 ml-2"> {distance}km</p>
                     </div>
 
                     <div className="flex items-center">

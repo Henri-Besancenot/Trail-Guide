@@ -147,7 +147,7 @@ function Trail() {
 
                   <div className="flex items-center">
                     <img src={hiking} alt="distance" className="w-10 h-10 bg-white p-2 rounded-full" /> 
-                    <p className="ml-2">{distance / 1000} km</p>
+                    <p className="ml-2">{distance} km</p>
                   </div>
 
                   <div className="flex items-center">
