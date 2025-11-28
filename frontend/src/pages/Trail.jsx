@@ -136,7 +136,7 @@ function Trail() {
                 Delete Trail
               </button>}
               </div>
-              <h2 className="text-gray-500 italic text-mg mt-0 mb-4">Trail uploaded by {trail.user.name}</h2>
+              <h2 className="text-gray-500 italic text-mg mt-0 mb-4">Trail uploaded by {trail.user}</h2>
               
               <p className="text-gray-700 mb-4 text-lg py-2">{description}</p>
 
