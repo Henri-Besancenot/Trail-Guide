@@ -27,7 +27,7 @@ export async function create(trail) {
   const newTrail = {
     title: trail.title || "Untitled Trail",
     description: trail.description || "",
-    user: creator.name,
+    user: creator,
     distance: trail.distance || 0,
     elevation_gain: trail.elevation_gain || 0,
     difficulty: trail.difficulty || "Easy",
