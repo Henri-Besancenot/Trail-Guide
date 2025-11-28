@@ -21,11 +21,6 @@ export async function getUserById(req, res) {
   res.json({ status: true, message: "Returning user", data });
 }
 
-export async function getUsers(req, res) {
-  const data = await userModel.getAll();
-  res.json({ status: true, message: "Returning users", data });
-}
-
 export async function createUser(req, res) {
   if (!hasKeys(req.body, ["name", "email", "password"]))
     throw { status: status.BAD_REQUEST, message: "You must specify the username, email and password" };

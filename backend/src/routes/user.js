@@ -7,7 +7,6 @@ const upload = multer({ storage: multer.memoryStorage() });
 const asyncWrap = fn => (req, res, next) =>
     Promise.resolve(fn(req, res, next)).catch(next);
 
-router.get('/api/users', asyncWrap(user.getUsers));
 router.get('/api/users/:id', asyncWrap(user.getUserById));
 router.post('/api/users/login', asyncWrap(user.loginUser));
 router.post('/api/users', asyncWrap(user.createUser));
