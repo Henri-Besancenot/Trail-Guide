@@ -89,7 +89,7 @@ function Header() {
                 <MenubarTrigger className="cursor-pointer hover:bg-gray-100 data-[state=open]:bg-gray-100 h-auto py-1">
                   <div className="flex flex-col items-center justify-center space-y-1">
                     <img 
-                      src={user.image ? user.image : defaultProfilePic} 
+                      src={user.picture ? user.picture : defaultProfilePic} 
                       alt="Profile"
                       className="h-8 w-8 rounded-full object-cover" 
                     />

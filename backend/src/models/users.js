@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { getDbo } from "./database.js";
+const defaultProfilePic = process.env.DEFAULT_PROFILE_PIC;
 
 function toObjectId(id) {
   if (!id) throw new Error("Invalid ID");
@@ -31,6 +32,7 @@ export async function create(user) {
     name: user.name || "Anonymous",
     email: user.email || "",
     passhash: user.passhash || "",
+    picture: defaultProfilePic,
     favorite: [],
     created: [],
   };
@@ -41,18 +43,18 @@ export async function create(user) {
 
 export async function update(user) {
   const dbo = await getDbo();
-  const { _id } = user;
-  if (!_id) throw new Error("Missing _id for update");
+  const { id } = user;
+  if (!id) throw new Error("Missing _id for update");
 
   delete user._id;
   delete user.id;
 
   const result = await dbo.collection("users").findOneAndUpdate(
-    { _id: toObjectId(_id) },
+    { _id: toObjectId(id) },
     { $set: user },
     { returnDocument: "after" }
   );
-  return result.value;
+  return result;
 }
 
 export async function deleteUser(id) {

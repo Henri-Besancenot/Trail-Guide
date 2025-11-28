@@ -11,19 +11,20 @@ function MyProfile() {
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
   const [editing, setEditing] = useState(false);
+  const [message, setMessage] = useState("");
   const [tempUsername, setTempUsername] = useState(user.name);
   const [tempEmail, setTempEmail] = useState(user.email);
-  const [message, setMessage] = useState("");
+  const [tempProfilePicture, setTempProfilePicture] = useState(null)
 
   const handleSave = async () => {
+    const formData = new FormData();
+    formData.append("username", tempUsername);
+    formData.append("email", tempEmail);
+    formData.append("picture", tempProfilePicture);
+
     const response = await fetch(`/api/users/${user._id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        _id: user._id,
-        name: tempUsername,
-        email: tempEmail
-      })
+      body: formData
     });
 
     const data = await response.json();
@@ -126,8 +127,9 @@ function MyProfile() {
                           accept="image/*"
                           className="hidden"
                           onChange={(e) => {
-                            const fileName = e.target.files[0]?.name;
-                            document.getElementById('file-name').textContent = fileName || "Choose a file";
+                            const file = e.target.files[0];
+                            setTempProfilePicture(file);
+                            document.getElementById('file-name').textContent = file?.name || "Choose a file";
                           }}
                         />
                         <label

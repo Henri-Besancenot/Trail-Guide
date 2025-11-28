@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import status from "http-status";
 import * as userModel from "../models/users.js";
+import { uploadFiles } from "../util/uploadFiles.js"
 
 function hasKeys(obj, keys) {
   if (!obj || typeof obj !== "object") return false;
@@ -41,16 +42,20 @@ export async function createUser(req, res) {
 }
 
 export async function updateUser(req, res) {
-  if (!hasKeys(req.body, ["_id", "name", "email"]))
+  if (!req.params.id)
+    throw { status: status.BAD_REQUEST, message: "You must specify the id" };
+  if (!hasKeys(req.body, ["username", "email"]))
     throw { status: status.BAD_REQUEST, message: "You must specify all the information" };
 
-  const { _id, email } = req.body;
-  const existingUser = await userModel.getByEmail(email);
-  if (existingUser && existingUser._id.toString() !== _id) {
+  const id = req.params.id;
+  const fields = await uploadFiles(req, id);
+
+  const existingUser = await userModel.getByEmail(fields.email);
+  if (existingUser && existingUser._id.toString() !== id) {
     throw { status: status.BAD_REQUEST, message: "Email already used by another user" };
   }
 
-  const updatedUser = await userModel.update(req.body);
+  const updatedUser = await userModel.update({id, ...fields});
   res.json({ status: true, message: "User updated", data: updatedUser });
 }
 
