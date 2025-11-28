@@ -1,6 +1,7 @@
 import gpxParse from "gpx-parse";
 import status from "http-status";
 import * as trailModel from "../models/trails.js";
+import { uploadFiles } from "../util/uploadFiles.js"
 
 function hasKeys(obj, keys) {
   if (!obj || typeof obj !== "object") return false;
@@ -27,15 +28,16 @@ export async function getTrails(req, res) {
 }
 
 export async function createTrail(req, res) {
-  const required = ["title", "description", "user", "distance", "elevation_gain", "difficulty", "duration", "images"];
+  const required = ["title", "description", "user", "distance", "elevation_gain", "difficulty", "duration"];
   if (!required.every(k => k in req.body))
     throw { status: status.BAD_REQUEST, message: "Missing required fields" };
-  
-  if (!req.file) {
-    throw { status: status.BAD_REQUEST, message: "You must upload a GPX file" };
+  if (!req.files) {
+    throw { status: status.BAD_REQUEST, message: "Missing GPX file" };
   }
 
-  const gpxText = req.file.buffer.toString("utf-8");
+  const fields = await uploadFiles(req, req.body.user);
+  const gpxFile = req.files.gpx_file[0];
+  const gpxText = gpxFile.buffer.toString("utf-8");
   const gpxData = await new Promise((resolve, reject) => {
     gpxParse.parseGpx(gpxText, (err, data) => {
       if (err) reject(err);
@@ -47,7 +49,7 @@ export async function createTrail(req, res) {
   const firstPoint = track?.segments?.[0]?.[0];
   const start_coords = firstPoint ? [firstPoint.lat, firstPoint.lon] : null;
 
-  const newTrail = await trailModel.create({...req.body, gpx_file: gpxText, start_coords });
+  const newTrail = await trailModel.create({...fields, start_coords });
   res.json({ status: true, message: "Trail added", data: newTrail });
 }
 

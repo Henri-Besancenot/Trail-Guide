@@ -18,7 +18,7 @@ function MyProfile() {
 
   const handleSave = async () => {
     const formData = new FormData();
-    formData.append("username", tempUsername);
+    formData.append("name", tempUsername);
     formData.append("email", tempEmail);
     formData.append("picture", tempProfilePicture);
 
@@ -124,7 +124,7 @@ function MyProfile() {
                         <input
                           type="file"
                           id="file-upload"
-                          accept="image/*"
+                          accept=".png, .jpg"
                           className="hidden"
                           onChange={(e) => {
                             const file = e.target.files[0];

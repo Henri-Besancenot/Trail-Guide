@@ -28,10 +28,9 @@ const CreateTrail = () => {
       formData.append("elevation_gain", elevationGain);
       formData.append("difficulty", difficulty);
       formData.append("duration", duration);
-      formData.append("images", JSON.stringify(images.split(",").map(img => img.trim())));
-  
-      if (gpxFile) {
-        formData.append("gpx_file", gpxFile);
+      formData.append("gpx_file", gpxFile);
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
       }
   
       // Create trail
@@ -68,7 +67,7 @@ const CreateTrail = () => {
           toAdd: true
         })
       });
-  
+      console.log(updatedUser)
       const updatedUserData = await updatedUser.json();
       if (updatedUser.ok) {
         setUser(updatedUserData.data);
@@ -160,11 +159,12 @@ const CreateTrail = () => {
             </div>
 
             <div className="mb-3">
-                <label className="block mb-1">Images (comma-separated URLs)</label>
+                <label className="block mb-1">Images</label>
                 <input
-                type="text"
-                value={images}
-                onChange={(e) => setImages(e.target.value)}
+                type="file"
+                accept=".jpg, .png"
+                multiple
+                onChange={(e) => setImages(e.target.files)}
                 className="w-full border px-2 py-1 rounded"
                 />
             </div>
@@ -176,6 +176,7 @@ const CreateTrail = () => {
                 accept=".gpx"
                 onChange={(e) => setGpxFile(e.target.files[0])}
                 className="w-full border px-2 py-1 rounded"
+                required
                 />
             </div>
 
