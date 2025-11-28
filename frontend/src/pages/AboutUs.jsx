@@ -15,6 +15,10 @@ function AboutUs() {
           <p className="text-lg text-gray-700">
             Our team is passionate about the outdoors and dedicated to providing accurate, up-to-date information on trails, including difficulty ratings, user reviews, and essential tips for a safe and enjoyable hiking experience. We also prioritize environmental conservation and encourage our users to practice Leave No Trace principles to preserve the beauty of our trails for future generations.
           </p>
+
+          <p className="text-lg text-gray-700 mt-6">
+            As a basis, we use data from AllTrails, a leading platform for trail information, to ensure that our users have access to comprehensive and reliable trail data. We are committed to continuously improving our platform and expanding our trail database to better serve the hiking community.
+          </p>
         </div>
       </div>
     </Template>

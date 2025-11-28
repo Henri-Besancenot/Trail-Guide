@@ -3,12 +3,11 @@ import Template from '../components/Template'
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useContext } from 'react';
 
-import { AuthContext } from "../context/AuthContext";
+import { useAuthStore } from "../store/authStore";
 import TrailPreview from '../components/TrailPreview';
 import TrailFilters from '../components/TrailFilters';
 
 function TrailsList() {
-  const { category } = useParams();
   const [searchParams] = useSearchParams();
   const [trails, setTrails] = useState([]);
   const [filters, setFilters] = useState({
@@ -17,9 +16,10 @@ function TrailsList() {
     minDistance: '',
     maxDistance: '',
     duration: '',
-    elevation_gain: ''
+    elevation_gain: '',
+    sort: 'o_duration'
   });
-  const { user } = useContext(AuthContext);
+  const user = useAuthStore((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,8 +41,7 @@ function TrailsList() {
   
       try {
         const res = await fetch(`/api/trails/all?${params.toString()}`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
+          method: "GET"
         });
   
         const data = await res.json();
@@ -88,7 +87,7 @@ function TrailsList() {
 
         <div className="mt-8 space-y-8">
             {trails.length === 0 ? (
-              <p>Loading trails...</p>
+              <p></p>
             ) : (
               trails.map((trail) => (
                 <TrailPreview key={trail._id} trail={trail} />

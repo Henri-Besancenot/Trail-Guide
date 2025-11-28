@@ -1,11 +1,15 @@
-const express = require('express');
+import express from "express";
+import multer from "multer";
+import * as trail from "../controllers/trail.js";
+
 const router = express.Router();
-const trail = require('../controllers/trail.js');
+const upload = multer({ storage: multer.memoryStorage() });
+const asyncWrap = fn => (req, res, next) =>
+    Promise.resolve(fn(req, res, next)).catch(next);
 
-router.get('/api/trails/all', trail.getTrails);
-router.get('/api/trails/all/:id', trail.getTrailById);
-router.post('/api/trails/all', trail.createTrail);
-router.put('/api/trails', trail.updateTrail);
-router.delete('/api/trails/all/:id', trail.deleteTrail);
+router.get('/api/trails/all', asyncWrap(trail.getTrails));
+router.get('/api/trails/all/:id', asyncWrap(trail.getTrailById));
+router.post('/api/trails/all', upload.fields([{ name: 'images', maxCount: 10 }, { name: 'gpx_file', maxCount: 1 }]), asyncWrap(trail.createTrail));
+router.delete('/api/trails/all/:id', asyncWrap(trail.deleteTrail));
 
-module.exports = router;
+export default router;

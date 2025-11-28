@@ -109,13 +109,14 @@ const TrailFilters = ({ filters, onChange }) => {
         </button>
       
         <select
-            name="OrderBy"
+            name="sort"
+            value={localFilters.sort}
+            onChange={handleInputChange}
             className="p-2 border rounded bg-white text-black px-4 ml-4"
         >
-          <option value="o_proximity">Proximity</option>
+          <option value="o_duration">Duration</option>
           <option value="o_diff">Difficulty</option>
           <option value="o_dist">Distance</option>
-          <option value="o_duration">Duration</option>
           <option value="o_elevation_gain">Elevation Gain</option>
         </select>
       </div>

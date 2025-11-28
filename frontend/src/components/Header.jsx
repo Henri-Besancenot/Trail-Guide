@@ -7,11 +7,12 @@ import {
 } from "@/components/ui/menubar"
 import { Link } from "react-router-dom"
 import logo from "@/assets/logo.png"
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext"
+import defaultProfilePic from "@/assets/defaultprofilpicture.png"
+import { useAuthStore } from "../store/authStore"
 
 function Header() {
-  const { user, logout } = useContext(AuthContext);
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
 
   return (
     <header className="w-full bg-[#F3F3EB] backdrop-blur-sm border-b border-gray-200 shadow-sm">
@@ -46,6 +47,11 @@ function Header() {
                 <MenubarItem onClick={() => console.log('Navigate to Nearby Trails')}>
                   <Link to="/trails/nearby">Nearby Trails</Link>
                 </MenubarItem>
+                {user && (
+                  <MenubarItem onClick={() => console.log('Create New Trail')}>
+                    <Link to="/trails/new">Create New Trail</Link>
+                  </MenubarItem>
+                )}
               </MenubarContent>
             </MenubarMenu>
 
@@ -64,20 +70,38 @@ function Header() {
             </MenubarMenu>
 
             {!user ? (
-              <Link to="/login" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
-                Login / Sign up
-              </Link>
-            ) : (
               <MenubarMenu>
                 <MenubarTrigger className="cursor-pointer hover:bg-gray-100 data-[state=open]:bg-gray-100">
-                {user.name}
+                  <img src={defaultProfilePic} alt="Login" className="h-8 w-8 rounded-full" />
+                </MenubarTrigger>
+                <MenubarContent className="bg-white">
+                  <MenubarItem onClick={() => console.log('Navigate to Login')}>
+                    <Link to="/login">Login</Link>
+                  </MenubarItem>
+                  <MenubarItem onClick={() => console.log('Navigate to Sign Up')}>
+                    <Link to="/signup">Sign Up</Link>
+                  </MenubarItem>
+                </MenubarContent>
+              </MenubarMenu>
+              
+            ) : (
+              <MenubarMenu>
+                <MenubarTrigger className="cursor-pointer hover:bg-gray-100 data-[state=open]:bg-gray-100 h-auto py-1">
+                  <div className="flex flex-col items-center justify-center space-y-1">
+                    <img 
+                      src={user.picture ? user.picture : defaultProfilePic} 
+                      alt="Profile"
+                      className="h-8 w-8 rounded-full object-cover" 
+                    />
+                    <span className="text-xs">{user.name}</span>
+                  </div>
                 </MenubarTrigger>
                 <MenubarContent className="bg-white">
                   <MenubarItem onClick={() => console.log('Navigate to My profile')}>
                   <Link to={`/users/${user._id}`}>My profile</Link>
                   </MenubarItem>
                   <MenubarItem onClick={logout}>
-                    <Link to="/contact">Logout</Link>
+                    <Link to="/login">Logout</Link>
                   </MenubarItem>
                 </MenubarContent>
               </MenubarMenu>

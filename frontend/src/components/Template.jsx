@@ -4,7 +4,7 @@ import Banner from '../components/Banner'
 
 function Template({ children, bannerTitle, bannerSubtitle, showBanner = true }) {
     return (
-        <div className="min-h-screen w-full flex flex-col ">
+        <div className="min-h-screen w-full flex flex-col">
             {/* Header with menubar */}
             <Header />
 
@@ -12,7 +12,9 @@ function Template({ children, bannerTitle, bannerSubtitle, showBanner = true }) 
             {showBanner && <Banner title={bannerTitle} subtitle={bannerSubtitle} />}
             
             {/* Additional content passed as children */}
-            {children}
+            <main className="flex-grow">
+                {children}
+            </main>
 
             {/* This div will be below the background image */}
             <Footer />   
