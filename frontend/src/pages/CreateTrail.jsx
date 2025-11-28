@@ -112,7 +112,7 @@ const CreateTrail = () => {
             </div>
 
             <div className="mb-3">
-                <label className="block mb-1">Distance (meters)</label>
+                <label className="block mb-1">Distance (kilometers)</label>
                 <input
                 type="number"
                 value={distance}
